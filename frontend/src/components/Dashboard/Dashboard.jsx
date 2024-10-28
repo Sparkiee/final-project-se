@@ -94,11 +94,11 @@ const Dashboard = () => {
 
   const items = [
     getItem("בית", "home", <HomeOutlined />),
-    privileges.isStudent && getItem("פרוייקטים", "projects", <ProjectOutlined />),
+    privileges.isStudent && getItem("פרויקטים", "projects", <ProjectOutlined />),
     getItem("תבנית דוחות", "templates", <FileSearchOutlined />),
     privileges.isStudent &&
-      getItem("הפרוייקט שלי", "sub1", <ApartmentOutlined />, [
-        getItem("דף הפרוייקט", "project-page"),
+      getItem("הפרויקט שלי", "sub1", <ApartmentOutlined />, [
+        getItem("דף הפרויקט", "project-page"),
         getItem("הצגת קבצים", "show-files"),
         getItem("הגשות", "submissions"),
         getItem("הערות מנחה", "advisor-comments"),
@@ -107,12 +107,12 @@ const Dashboard = () => {
       ]),
 
     (privileges.isAdvisor || privileges.isCoordinator) &&
-      getItem("פרוייקטים שלי", "sub2", <FundProjectionScreenOutlined />, [
-        getItem("הזנת פרוייקט", "create-project"),
-        getItem("סטטוס פרוייקטים", "projects-status"),
+      getItem("פרויקטים שלי", "sub2", <FundProjectionScreenOutlined />, [
+        getItem("הזנת פרויקט", "create-project"),
+        getItem("סטטוס פרויקטים", "projects-status"),
         getItem("סטטוס הגשות", "submissions-status")
       ]),
-    privileges.isCoordinator && getItem("ניהול פרוייקטים", "project-managment", <FundProjectionScreenOutlined />),
+    privileges.isCoordinator && getItem("ניהול פרויקטים", "project-managment", <FundProjectionScreenOutlined />),
     privileges.isCoordinator &&
       getItem("ניהול משתמשים", "sub4", <TeamOutlined />, [
         getItem("יצירת משתמש חדש", "create-user"),
@@ -243,7 +243,7 @@ const Dashboard = () => {
               className="collage-logo"
               onClick={() => navigate("/dashboard/home")}
             />
-            <h1>מערכת ניהול פרוייקטים</h1>
+            <h1>מערכת ניהול פרויקטים</h1>
           </div>
           <div className="site-upper-header-left">
             <Tooltip title="פרופיל">

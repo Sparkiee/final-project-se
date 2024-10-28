@@ -1,0 +1,64 @@
+.header-container {
+  min-height: 7rem;
+  max-height: 7rem;
+  img {
+    width: 20rem;
+    cursor: pointer;
+  }
+
+  .site-upper-header-right {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    max-width: 80%;
+    margin-right: 2rem;
+  }
+
+  .site-upper-header-right .collage-logo {
+    width: 20rem;
+    cursor: pointer;
+  }
+
+  .site-upper-header-left {
+    position: absolute;
+    top: 1.5%;
+    left: 2%;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .avatar-icon {
+    cursor: pointer;
+    transition: 0.2s all linear;
+  }
+
+  .avatar-icon:hover {
+    transform: scale(1.1);
+  }
+
+  .notification-icon {
+    cursor: pointer;
+    font-size: 3.5rem;
+    transition: 0.2s all linear;
+  }
+
+  .notification-icon:hover {
+    transform: scale(1.1);
+  }
+
+  .logout-icon {
+    cursor: pointer;
+  }
+
+  .logout-icon svg {
+    font-size: 3.5rem;
+    fill: #ff4d4f;
+    transition: 0.2s all linear;
+  }
+
+  .logout-icon svg:hover {
+    fill: #ff7875;
+  }
+}

@@ -1,0 +1,125 @@
+.sidebar-container {
+  display: flex;
+  width: 220px;
+  background-color: #001529;
+  height: 100%;
+  color: white;
+
+  .sidebar-actions {
+    width: 100%;
+    .sidebar-greeting {
+      border-bottom: 1px solid #09243d;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      word-break: break-word;
+      width: 100%;
+    }
+
+    ul {
+      color: rgb(228, 222, 222);
+      list-style-type: none;
+      font-size: 1.5rem;
+      padding: 0;
+      margin: 0;
+      li {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        transition: color 0.1s linear, transform 0.1s linear;
+        .sidebar-option {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 1.5rem;
+          margin: 0 1rem;
+          svg {
+            width: 2rem;
+            fill: rgb(228, 222, 222);
+            width: 2.5rem;
+            margin-right: auto;
+            transition: transform 0.2s linear;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+          }
+          &:hover {
+            border-radius: 0.5rem;
+            color: white;
+            transform: scale(1.05);
+
+            svg {
+              fill: white;
+            }
+          }
+        }
+        .active {
+          background-color: #1890ff;
+          border-radius: 1.5rem;
+          color: white;
+        }
+        /* .sidebar-drop-menu {
+          background-color: #09243d;
+          ul {
+            li {
+                padding: 1.5rem 0;
+                text-indent: 5.5rem;
+            }
+          }
+          
+        } */
+        .sidebar-drop-menu {
+          background-color: #09243d;
+          overflow: hidden; // This is crucial for the collapse effect
+          transition: max-height 0.3s ease;
+          max-height: 0; // Initially collapsed
+
+          ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            li {
+              padding: 1.5rem 0;
+              margin: 0;
+              text-indent: 5.5rem;
+              color: rgb(228, 222, 222);
+
+              &:hover {
+                color: white;
+                transform: scale(1.05);
+              }
+            }
+            .active {
+              background-color: #1890ff;
+              border-radius: 1.5rem;
+              color: white;
+            }
+          }
+        }
+
+        // Open state for the drop-down with transition
+        .sidebar-drop-menu.open {
+          max-height: 200px; // Set to a large enough height to accommodate the content
+        }
+
+        .sidebar-drop-menu.closed {
+          max-height: 0; // Set to zero for collapsed state
+        }
+      }
+      li.closed {
+        & > div > svg {
+          transform: rotate3d(1, 0, 0, 180deg);
+        }
+        .sidebar-drop-menu {
+          max-height: 0;
+        }
+      }
+      li.open {
+        .sidebar-drop-menu {
+          max-height: 200px;
+        }
+      }
+    }
+  }
+}

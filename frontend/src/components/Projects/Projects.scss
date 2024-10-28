@@ -4,13 +4,14 @@
 
 .projects {
   width: 100%;
-  padding-left: 24px;
+  font-size: 1.5rem;
 
   .list-projects {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
     gap: 2rem;
     margin-top: 2rem;
+    justify-content: space-between; /* Spread items evenly */
 
     .project-overlay {
       position: relative;
@@ -21,7 +22,6 @@
       border-radius: 3rem;
       border: 1px solid #ccc;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: calc(100% / 3 - 2rem);
       .taken-tag {
         position: absolute;
         visibility: hidden;

@@ -8,6 +8,7 @@ import {
   removeStudentFromProject,
   switchProjectRegistration,
   getProjectsStatus,
+  updateProject
 } from "../controllers/projectController.js";
 import { ensureAuthenticated, isAdvisorOrCoordinator } from "../middleware/auth.js";
 import {
@@ -15,7 +16,7 @@ import {
   getProject,
   addCandidateToProject,
   removeCandidateFromProject,
-  getSelfProjects,
+  getSelfProjects
 } from "../controllers/projectController.js";
 
 const router = express.Router();
@@ -33,5 +34,6 @@ router.post("/approve-candidate", ensureAuthenticated, isAdvisorOrCoordinator, a
 router.post("/remove-student", ensureAuthenticated, isAdvisorOrCoordinator, removeStudentFromProject);
 router.post("/switch-registration", ensureAuthenticated, isAdvisorOrCoordinator, switchProjectRegistration);
 router.get("/status", getProjectsStatus);
+router.put("/edit-project/:id", ensureAuthenticated, isAdvisorOrCoordinator, updateProject);
 
 export default router;

@@ -49,7 +49,7 @@ const ProjectPage = () => {
     };
     checkIfUserCandidate();
     getAdvisorInfo();
-  }, [projectData]);
+  }, [projectData, projectID]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -98,7 +98,7 @@ const ProjectPage = () => {
       setIsLoading(true);
       message.open({
         type: "loading",
-        content: "מבצע הסרת הרשמה מהפרוייקט..."
+        content: "מבצע הסרת הרשמה מהפרויקט..."
       });
       const response = await axios.get(`http://localhost:5000/api/user/get-user`, {
         withCredentials: true
@@ -113,7 +113,7 @@ const ProjectPage = () => {
       setTimeout(() => {
         message.open({
           type: "success",
-          content: "הוסר הרשמה מהפרוייקט",
+          content: "הוסר הרשמה מהפרויקט",
           duration: 2
         });
       }, 500);
@@ -132,7 +132,7 @@ const ProjectPage = () => {
       setIsLoading(true);
       message.open({
         type: "loading",
-        content: "מבצע הרשמה לפרוייקט..."
+        content: "מבצע הרשמה לפרויקט..."
       });
       await axios.post(
         `http://localhost:5000/api/project/add-candidate`,
@@ -182,7 +182,7 @@ const ProjectPage = () => {
           className={`project-navbar-item ${page.Information ? "navbar-item-selected" : ""}`}
           onClick={() => switchPage("Information")}>
           <InfoCircleOutlined />
-          <div className="project-navbar-item-name">פרטי הפרוייקט</div>
+          <div className="project-navbar-item-name">פרטי הפרויקט</div>
         </div>
         <div
           className={`project-navbar-item ${page.Grades ? "navbar-item-selected" : ""}`}
@@ -201,7 +201,7 @@ const ProjectPage = () => {
       {page.Information && (
         <div className="project-profile-info project-profile-content">
           <div className="project-profile-info-item">
-            <div className="project-profile-info-title">תיאור הפרוייקט</div>
+            <div className="project-profile-info-title">תיאור הפרויקט</div>
             <div
               className="project-profile-info-text rich-text-content"
               dangerouslySetInnerHTML={{ __html: processContent(projectData.description) }}></div>
@@ -211,7 +211,7 @@ const ProjectPage = () => {
             <Tooltip title="מתאים ל">
               <div className="project-badge project-suitable">{projectData.suitableFor}</div>
             </Tooltip>
-            <Tooltip title="סוג פרוייקט">
+            <Tooltip title="סוג פרויקט">
               <div className="project-badge project-type">{projectData.type}</div>
             </Tooltip>
           </div>
@@ -240,7 +240,7 @@ const ProjectPage = () => {
                     <span>מבצע הסרת הרשמה</span>
                   </div>
                 ) : (
-                  "הסר הרשמה מפרוייקט"
+                  "הסר הרשמה מפרויקט"
                 )}
               </div>
             ) : (
@@ -251,7 +251,7 @@ const ProjectPage = () => {
                     <span>מבצע הרשמה</span>
                   </div>
                 ) : (
-                  "הרשמה לפרוייקט"
+                  "הרשמה לפרויקט"
                 )}
               </div>
             )

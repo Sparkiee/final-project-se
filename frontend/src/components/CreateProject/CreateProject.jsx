@@ -66,9 +66,9 @@ const CreateProject = () => {
   }, []);
 
   const handleTypeChange = (value) => {
-    setIsOtherType(value === "other");
-    setStudentInitiative(value === "student-initiaive");
-    if (value !== "other") {
+    setIsOtherType(value === "אחר");
+    setStudentInitiative(value === "יוזמת סטודנט");
+    if (value !== "אחר") {
       form.setFieldValue("customType", undefined);
     }
   };
@@ -141,7 +141,7 @@ const CreateProject = () => {
     const finalValues = {
       ...values,
       description: processedDescription,
-      type: values.type === "other" ? values.customType : values.type,
+      type: values.type === "אחר" ? values.customType : values.type,
       advisors: values.advisors?.map((advisorId) => advisorUsers.find((user) => user._id === advisorId)) || [],
       students:
         values.students?.map((studentId) => studentsNoProject.find((student) => student.id === studentId)) || [],
@@ -153,7 +153,7 @@ const CreateProject = () => {
       const response = await axios.post("http://localhost:5000/api/project/create-project", finalValues, {
         withCredentials: true,
       });
-      message.success("הפרוייקט נוצר בהצלחה");
+      message.success("הפרויקט נוצר בהצלחה");
       setProjectCreated(true);
       setProjectCreatedId(response.data.project._id);
       form.resetFields();
@@ -161,9 +161,9 @@ const CreateProject = () => {
     } catch (error) {
       console.error("Error occurred:", error.response?.data?.message);
       if (error.response?.data?.message === "This Project already exists in that year") {
-        message.error("פרוייקט עם אותו שם כבר קיים בשנה זו");
+        message.error("פרויקט עם אותו שם כבר קיים בשנה זו");
       } else {
-        message.error("שגיאה ביצירת הפרוייקט");
+        message.error("שגיאה ביצירת הפרויקט");
       }
     }
   };
@@ -177,7 +177,7 @@ const CreateProject = () => {
 
   return (
     <div className="create-project">
-      <h1>יצירת פרוייקט חדש</h1>
+      <h1>יצירת פרויקט חדש</h1>
       <Form
         className="create-project-form"
         form={form}
@@ -212,7 +212,7 @@ const CreateProject = () => {
           rules={[
             {
               required: true,
-              message: "חובה להזין תיאור לפרוייקט",
+              message: "חובה להזין תיאור לפרויקט",
             },
           ]}>
           <Editor style={{ height: "320px" }} onTextChange={handleEditorChange} />
@@ -253,7 +253,7 @@ const CreateProject = () => {
         <Form.Item
           className="create-project-form-item"
           name="type"
-          label="סוג הפרוייקט"
+          label="סוג הפרויקט"
           hasFeedback
           rules={[
             {
@@ -262,11 +262,12 @@ const CreateProject = () => {
             },
           ]}>
           <Select placeholder="בחר סוג" onChange={handleTypeChange}>
-            <Option value="research">מחקר</Option>
-            <Option value="development">פיתוח</Option>
-            <Option value="hitech">הייטק</Option>
-            <Option value="student-initiaive">יוזמת סטודנט</Option>
-            <Option value="other">אחר</Option>
+            <Option value="מחקרי">מחקרי</Option>
+            <Option value="תעשייתי הייטק">תעשייתי הייטק</Option>
+            <Option value="תעשייתי לא הייטק">תעשייתי לא הייטק</Option>
+            <Option value="יוזמת מנחה">יוזמת מנחה</Option>
+            <Option value="יוזמת סטודנט">יוזמת סטודנט</Option>
+            <Option value="אחר">אחר</Option>
           </Select>
         </Form.Item>
 
@@ -298,7 +299,7 @@ const CreateProject = () => {
                 message: "חובה להזין סוג",
               },
             ]}>
-            <Input placeholder="הזן סוג פרוייקט מותאם" />
+            <Input placeholder="הזן סוג פרויקט מותאם" />
           </Form.Item>
         )}
 
@@ -384,7 +385,7 @@ const CreateProject = () => {
         <Form.Item className="create-project-form-item">
           <div className="form-buttons">
             <Button type="primary" htmlType="submit">
-              צור פרוייקט
+              צור פרויקט
             </Button>
             <Button danger onClick={onReset}>
               אפס טופס
@@ -397,7 +398,7 @@ const CreateProject = () => {
           <FloatButton
             type="primary"
             shape="square"
-            onClick={() => navigate(`/dashboard/project/${projectCreatedId}`)}
+            onClick={() => navigate(`/project/${projectCreatedId}`)}
             description={
               <div className="float-button-text">
                 <svg
@@ -417,7 +418,7 @@ const CreateProject = () => {
                       strokeLinejoin="round"></path>
                   </g>
                 </svg>
-                עבור לדף הפרוייקט
+                עבור לדף הפרויקט
               </div>
             }
             style={{

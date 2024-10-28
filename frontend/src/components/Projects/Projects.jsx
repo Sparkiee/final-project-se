@@ -94,7 +94,7 @@ const Projects = () => {
 
   return (
     <div className="projects">
-      <h2>רשימת פרוייקטים</h2>
+      <h2>רשימת פרויקטים</h2>
       <div className="list-projects">
         {projects.length > 0 ? (
           projects.map((project) => (
@@ -107,7 +107,7 @@ const Projects = () => {
             />
           ))
         ) : (
-          <p>אין פרוייקטים זמינים כרגע</p>
+          <p>אין פרויקטים זמינים כרגע</p>
         )}
       </div>
 

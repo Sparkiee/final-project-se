@@ -60,7 +60,7 @@ const ProjectBox = ({ markFavorite, ...props }) => {
             <Tooltip title="מתאים ל">
               <div className="project-badge project-suitable">{props.suitableFor}</div>
             </Tooltip>
-            <Tooltip title="סוג פרוייקט">
+            <Tooltip title="סוג פרויקט">
               <div className="project-badge project-type">{props.type}</div>
             </Tooltip>
           </div>
@@ -78,7 +78,7 @@ const ProjectBox = ({ markFavorite, ...props }) => {
                 </div>
               ))}
             </div>
-            <div className="more-info" onClick={() => navigate(`/dashboard/project/${props._id}`)}>
+            <div className="more-info" onClick={() => navigate(`/project/${props._id}`)}>
               <Tooltip title="לפירוט מלא + הרשמה">[ למידע נוסף ורישום ]</Tooltip>
             </div>
           </div>

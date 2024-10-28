@@ -53,7 +53,7 @@ const ShowAllUsers = () => {
         // Add project information to users
         const usersWithProjects = activeUsers.map((user) => ({
           ...user,
-          projectInfo: studentProjectMap.get(user._id),
+          projectInfo: studentProjectMap.get(user._id)
         }));
 
         setUsers(usersWithProjects);
@@ -81,11 +81,11 @@ const ShowAllUsers = () => {
     userId: user.id,
     registerDate: new Date(user.registerDate).toLocaleDateString("he-IL"),
     projectId: user.projectInfo?._id || null,
-    projectTitle: user.projectInfo?.title || "לא נבחר פרוייקט",
+    projectTitle: user.projectInfo?.title || "לא נבחר פרויקט",
     email: user.email,
     isStudent: user.isStudent,
     isAdvisor: user.isAdvisor,
-    isCoordinator: user.isCoordinator,
+    isCoordinator: user.isCoordinator
   }));
 
   const columns = [
@@ -103,60 +103,60 @@ const ShowAllUsers = () => {
         </a>
       ),
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.name.localeCompare(b.name),
       defaultSortOrder: "ascend",
       sortDirections: ["descend", "ascend"],
-      width: "20%",
+      width: "20%"
     },
     {
       title: "ת.ז.",
       dataIndex: "userId",
       key: "userId",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.userId - b.userId,
       sortDirections: ["descend", "ascend"],
-      width: "10%",
+      width: "10%"
     },
     {
       title: "תאריך הרשמה",
       dataIndex: "registerDate",
       key: "registerDate",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => new Date(a.registerDate) - new Date(b.registerDate),
       sortDirections: ["descend", "ascend"],
-      width: "10%",
+      width: "10%"
     },
     {
-      title: "פרוייקט נבחר",
+      title: "פרויקט נבחר",
       dataIndex: "selectedProject",
       key: "selectedProject",
       render: (text, record) => {
         if (!record.projectId) {
-          return "לא נבחר פרוייקט";
+          return "לא נבחר פרויקט";
         }
-        return <a onClick={() => navigate(`/dashboard/project/${record.projectId}`)}>{record.projectTitle}</a>;
+        return <a onClick={() => navigate(`/project/${record.projectId}`)}>{record.projectTitle}</a>;
       },
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.projectTitle.localeCompare(b.projectTitle),
       sortDirections: ["descend", "ascend"],
       filters: [
-        { text: "נבחר פרוייקט", value: "נבחר פרוייקט" },
-        { text: "לא נבחר פרוייקט", value: "לא נבחר פרוייקט" },
+        { text: "נבחר פרויקט", value: "נבחר פרויקט" },
+        { text: "לא נבחר פרויקט", value: "לא נבחר פרויקט" }
       ],
       onFilter: (value, record) => {
-        if (value === "נבחר פרוייקט") {
+        if (value === "נבחר פרויקט") {
           return record.projectId !== null;
         }
         return record.projectId === null;
-      },
+      }
     },
     {
       title: "תפקיד",
@@ -171,7 +171,7 @@ const ShowAllUsers = () => {
       filters: [
         { text: "סטודנט", value: "סטודנט" },
         { text: "מנחה", value: "מנחה" },
-        { text: "מנהל", value: "מנהל" },
+        { text: "מנהל", value: "מנהל" }
       ],
       onFilter: (value, record) => {
         if (value === "סטודנט") {
@@ -183,18 +183,18 @@ const ShowAllUsers = () => {
         }
         return false;
       },
-      width: "12%",
+      width: "12%"
     },
     {
       title: "אימייל",
       dataIndex: "email",
       key: "email",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.email.localeCompare(b.email),
       sortDirections: ["descend", "ascend"],
-      width: "15%",
+      width: "15%"
     },
     {
       title: "פעולות",
@@ -211,7 +211,7 @@ const ShowAllUsers = () => {
                 id: record.userId,
                 isStudent: record.isStudent,
                 isAdvisor: record.isAdvisor,
-                isCoordinator: record.isCoordinator,
+                isCoordinator: record.isCoordinator
               });
             }}>
             <Tooltip title="עריכה">
@@ -224,7 +224,7 @@ const ShowAllUsers = () => {
               setSuspensionDetails({
                 key: record.key,
                 name: record.name,
-                id: record.userId,
+                id: record.userId
               });
             }}>
             <Tooltip title="להשעות משתמש">
@@ -233,8 +233,8 @@ const ShowAllUsers = () => {
           </a>
         </Space>
       ),
-      width: "5%",
-    },
+      width: "5%"
+    }
   ];
 
   const handleEdit = async (userId) => {
@@ -253,7 +253,7 @@ const ShowAllUsers = () => {
         id: values.id,
         isStudent: values.isStudent,
         isAdvisor: values.isAdvisor,
-        isCoordinator: values.isCoordinator,
+        isCoordinator: values.isCoordinator
       };
 
       try {
@@ -303,7 +303,7 @@ const ShowAllUsers = () => {
       const response = await axios.put(
         `http://localhost:5000/api/user/suspend-user/${suspensionDetails.key}`,
         {
-          reason: values.reason,
+          reason: values.reason
         },
         { withCredentials: true }
       );
@@ -315,7 +315,7 @@ const ShowAllUsers = () => {
         const newSuspendedUser = {
           ...suspendedUser,
           suspendedReason: values.reason,
-          suspendedAt: new Date(),
+          suspendedAt: new Date()
         };
 
         setUsers(updatedUsers);
@@ -353,61 +353,61 @@ const ShowAllUsers = () => {
         </a>
       ),
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.name.localeCompare(b.name),
       defaultSortOrder: "ascend",
       sortDirections: ["descend", "ascend"],
-      width: "15%",
+      width: "15%"
     },
     {
       title: "ת.ז.",
       dataIndex: "userId",
       key: "userId",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.userId - b.userId,
       sortDirections: ["descend", "ascend"],
-      width: "8%",
+      width: "8%"
     },
     {
       title: "תאריך הרשמה",
       dataIndex: "registerDate",
       key: "registerDate",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => new Date(a.registerDate) - new Date(b.registerDate),
       sortDirections: ["descend", "ascend"],
-      width: "10%",
+      width: "10%"
     },
     {
-      title: "פרוייקט נבחר",
+      title: "פרויקט נבחר",
       dataIndex: "selectedProject",
       key: "selectedProject",
       render: (text, record) => {
         if (!record.projectId) {
-          return "לא נבחר פרוייקט";
+          return "לא נבחר פרויקט";
         }
         return <a onClick={() => navigate(`/dashboard/project/${record.projectId}`)}>{record.projectTitle}</a>;
       },
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.projectTitle.localeCompare(b.projectTitle),
       sortDirections: ["descend", "ascend"],
       filters: [
-        { text: "נבחר פרוייקט", value: "נבחר פרוייקט" },
-        { text: "לא נבחר פרוייקט", value: "לא נבחר פרוייקט" },
+        { text: "נבחר פרויקט", value: "נבחר פרויקט" },
+        { text: "לא נבחר פרויקט", value: "לא נבחר פרויקט" }
       ],
       onFilter: (value, record) => {
-        if (value === "נבחר פרוייקט") {
+        if (value === "נבחר פרויקט") {
           return record.projectId !== null;
         }
         return record.projectId === null;
       },
-      width: "20%",
+      width: "20%"
     },
     {
       title: "תפקיד",
@@ -422,7 +422,7 @@ const ShowAllUsers = () => {
       filters: [
         { text: "סטודנט", value: "סטודנט" },
         { text: "מנחה", value: "מנחה" },
-        { text: "מנהל", value: "מנהל" },
+        { text: "מנהל", value: "מנהל" }
       ],
       onFilter: (value, record) => {
         if (value === "סטודנט") {
@@ -434,18 +434,18 @@ const ShowAllUsers = () => {
         }
         return false;
       },
-      width: "10%",
+      width: "10%"
     },
     {
       title: "אימייל",
       dataIndex: "email",
       key: "email",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.email.localeCompare(b.email),
       sortDirections: ["descend", "ascend"],
-      width: "10%",
+      width: "10%"
     },
     {
       title: "סיבת השעיה",
@@ -466,22 +466,22 @@ const ShowAllUsers = () => {
         </div>
       ),
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => a.suspensionReason.localeCompare(b.suspensionReason),
       sortDirections: ["descend", "ascend"],
-      width: "15%",
+      width: "15%"
     },
     {
       title: "תאריך השעיה",
       dataIndex: "suspensionDate",
       key: "suspensionDate",
       showSorterTooltip: {
-        target: "full-header",
+        target: "full-header"
       },
       sorter: (a, b) => new Date(a.suspensionDate) - new Date(b.suspensionDate),
       sortDirections: ["descend", "ascend"],
-      width: "10%",
+      width: "10%"
     },
     {
       title: "פעולות",
@@ -504,8 +504,8 @@ const ShowAllUsers = () => {
           </a>
         </Space>
       ),
-      width: "5%",
-    },
+      width: "5%"
+    }
   ];
 
   const suspendedDataSource = suspendedUsers.map((user) => ({
@@ -514,13 +514,13 @@ const ShowAllUsers = () => {
     userId: user.id,
     registerDate: new Date(user.registerDate).toLocaleDateString("he-IL"),
     projectId: user.projectInfo?._id || null,
-    projectTitle: user.projectInfo?.title || "לא נבחר פרוייקט",
+    projectTitle: user.projectInfo?.title || "לא נבחר פרויקט",
     email: user.email,
     isStudent: user.isStudent,
     isAdvisor: user.isAdvisor,
     isCoordinator: user.isCoordinator,
     suspensionReason: user.suspendedReason,
-    suspensionDate: new Date(user.suspendedAt).toLocaleDateString("he-IL"),
+    suspensionDate: new Date(user.suspendedAt).toLocaleDateString("he-IL")
   }));
 
   const handleUnsuspend = async (userId) => {
@@ -623,7 +623,7 @@ const ShowAllUsers = () => {
             hasFeedback={!submitting && touched.name}
             rules={[
               { required: true, message: "חובה להזין שם" },
-              { min: 2, message: "שם חייב להכיל לפחות 2 תווים" },
+              { min: 2, message: "שם חייב להכיל לפחות 2 תווים" }
             ]}>
             <Input disabled={componentDisabled} />
           </Form.Item>
@@ -633,7 +633,7 @@ const ShowAllUsers = () => {
             hasFeedback={!submitting && touched.email}
             rules={[
               { required: true, message: "חובה להזין אימייל" },
-              { type: "email", message: "אנא הכנס כתובת אימייל תקינה" },
+              { type: "email", message: "אנא הכנס כתובת אימייל תקינה" }
             ]}>
             <Input disabled={componentDisabled} />
           </Form.Item>
@@ -643,7 +643,7 @@ const ShowAllUsers = () => {
             hasFeedback={!submitting && touched.id}
             rules={[
               { required: true, message: "חובה להזין תעודת זהות" },
-              { pattern: /^\d{9}$/, message: "תעודת זהות חייבת להכיל 9 ספרות" },
+              { pattern: /^\d{9}$/, message: "תעודת זהות חייבת להכיל 9 ספרות" }
             ]}>
             <Input disabled={componentDisabled} />
           </Form.Item>

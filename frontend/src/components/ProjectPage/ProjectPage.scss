@@ -9,6 +9,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 1.5rem;
   margin: 0 auto;
+  font-size: 1.5rem;
   .project-profile-header {
     width: 100%;
     display: flex;
@@ -209,7 +210,7 @@
         border-radius: 1.5rem;
         color: #000; /* Optional: white text for better readability */
         font-weight: bold; /* Optional: bold text to emphasize the badge look */
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         display: inline-block; /* Makes sure the badge fits tightly around content */
       }
 

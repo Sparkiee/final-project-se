@@ -28,9 +28,9 @@ const Homepage = () => {
   return (
     <div className="home-page">
       <div className="home-page-statistics">
-        <Statistic title="פרוייקטים פתוחים" value={numOfOpenProjects} formatter={formatter} />
-        <Statistic title="פרוייקטים לקוחים" value={numOfTakenProjects} formatter={formatter} />
-        <Statistic title="פרוייקטים שהושלמו" value={numOfFinishedProjects} formatter={formatter} />
+        <Statistic title="פרויקטים פתוחים" value={numOfOpenProjects} formatter={formatter} />
+        <Statistic title="פרויקטים לקוחים" value={numOfTakenProjects} formatter={formatter} />
+        <Statistic title="פרויקטים שהושלמו" value={numOfFinishedProjects} formatter={formatter} />
       </div>
       <div className="home-page-updates">
         <h2>עדכונים</h2>

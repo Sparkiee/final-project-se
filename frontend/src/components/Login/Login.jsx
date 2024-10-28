@@ -39,7 +39,7 @@ const Login = () => {
       navigate("/dashboard");
     } catch (error) {
       if (error.response.status === 403) {
-        setErrorMessage("משתמש מושהה, פנה למנהל הפרוייקטים");
+        setErrorMessage("משתמש מושהה, פנה למנהל הפרויקטים");
       } else {
         setErrorMessage(error.response.data);
       }
