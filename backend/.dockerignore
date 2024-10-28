@@ -1,0 +1,19 @@
+# Ignore node_modules to prevent copying local dependencies
+node_modules
+node_modules/*
+
+# Ignore environment variable files for security
+.env
+
+# Ignore Docker-specific files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore logs
+logs
+*.log
+
+# Ignore other unnecessary files
+npm-debug.log
+.DS_Store

@@ -37,7 +37,7 @@ app.use(passport.session());
 
 // Allow cross-origin requests
 const corsOptions = {
-  origin: "http://localhost:3000", // Allow only the front-end's origin
+  origin: true, // Allow all origins for Development purposes only
   credentials: true, // Allow cookies and credentials
 };
 
