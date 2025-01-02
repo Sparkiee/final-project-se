@@ -759,14 +759,33 @@ const Submissions = () => {
           פתיחת הגשה לפרויקטים נבחרים
         </Button>
         {/* work in progress, doesn't work */}
-        <Button type="primary" onClick={() => setAssignJudgesModal(true)}>
+        <Button
+          type="primary"
+          onClick={() => {
+            if (yearFilter === "all")
+              return message.open({
+                type: "warning",
+                content: "יש לבחור שנה ספציפית",
+              });
+            setAssignJudgesModal(true);
+          }}>
           הקצאת שופטים אוטומטית
         </Button>
         <div className="action-buttons-end">
           <Button type="primary" onClick={() => setEditSubmissions(true)}>
             עריכת הגשות
           </Button>
-          <Button color="danger" variant="solid" onClick={() => setDeleteAllSubmissions(true)}>
+          <Button
+            color="danger"
+            variant="solid"
+            onClick={() => {
+              if (yearFilter === "all")
+                return message.open({
+                  type: "warning",
+                  content: "יש לבחור שנה ספציפית",
+                });
+              setDeleteAllSubmissions(true);
+            }}>
             מחיקת הגשות
           </Button>
         </div>
