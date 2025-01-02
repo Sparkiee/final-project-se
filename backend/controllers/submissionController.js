@@ -373,6 +373,10 @@ export const copyJudges = async (req, res) => {
   }
 };
 
+export const assignJudgesAI = async (req, res) => {
+  
+};
+
 export const assignJudgesAutomatically = async (req, res) => {
   const workload = {};
   // Get all active projects
