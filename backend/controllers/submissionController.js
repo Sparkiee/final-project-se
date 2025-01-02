@@ -374,7 +374,13 @@ export const copyJudges = async (req, res) => {
 };
 
 export const assignJudgesAI = async (req, res) => {
-  
+  const workload = {};
+  const activeProjects = await Project.find({
+    isTerminated: false,
+    isFinished: false,
+    isTaken: true,
+    year: req.body.submissionYear,
+  });
 };
 
 export const assignJudgesAutomatically = async (req, res) => {

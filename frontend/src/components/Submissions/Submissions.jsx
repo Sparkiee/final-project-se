@@ -36,10 +36,12 @@ const Submissions = () => {
   const { fetchNotifications } = useContext(NotificationsContext);
   const [formAll] = Form.useForm();
   const [editSubmission] = Form.useForm();
+  const [judgeAssignmentForm] = Form.useForm();
   const [editSpecificSubmission] = Form.useForm();
   const [formSpecific] = Form.useForm();
   const [gradeForm] = Form.useForm();
   const [deleteSubmissionsForm] = Form.useForm();
+  const [assignJudgesModal, setAssignJudgesModal] = useState(false);
   const [allSubmissions, setAllSubmissions] = useState(false);
   const [specificSubmission, setSpecificSubmission] = useState(false);
   const [editSubmissions, setEditSubmissions] = useState(false);
@@ -757,7 +759,7 @@ const Submissions = () => {
           פתיחת הגשה לפרויקטים נבחרים
         </Button>
         {/* work in progress, doesn't work */}
-        <Button type="primary" onClick={() => assignJudgesAutomatically()}>
+        <Button type="primary" onClick={() => setAssignJudgesModal(true)}>
           הקצאת שופטים אוטומטית
         </Button>
         <div className="action-buttons-end">
@@ -770,6 +772,59 @@ const Submissions = () => {
         </div>
       </div>
       <Table columns={columns} dataSource={filteredSubmissionData} scroll={{ x: "max-content" }} />
+      <Modal
+        title="הקצאת שופטים אוטומטית"
+        open={assignJudgesModal}
+        footer={[
+          <div className="modal-footer">
+            <Button
+              type="default"
+              onClick={() => {
+                setAssignJudgesModal(false);
+                judgeAssignmentForm.resetFields();
+              }}>
+              סגור
+            </Button>
+            <div className="modal-footer-action">
+              <Button key="extra1" type="primary" onClick={() => console.log("Extra Action 1")}>
+                הקצאה רגילה
+              </Button>
+              <Button key="extra2" type="primary" onClick={() => console.log("Extra Action 2")}>
+                הקצאה חכמה
+              </Button>
+            </div>
+          </div>,
+        ]}
+        cancelText={"סגור"}
+        onCancel={() => setAssignJudgesModal(false)}
+        okButtonProps={{ style: { display: "none" } }}>
+        <Form layout="vertical" form={judgeAssignmentForm}>
+          <p>
+            <span style={{ color: "red", fontWeight: 600 }}>שים לב</span> - ההקצאה תתבצע לכל ההגשות בשנה הנבחרת{" "}
+            <Tooltip title="ניתן לשנות בחירה ב dropdown">
+              <span style={{ textDecoration: "underline" }}>{yearFilter}</span>
+            </Tooltip>
+          </p>
+          <Form.Item
+            label="בחר הגשה"
+            name="submissionName"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "חובה לבחור הגשה",
+              },
+            ]}>
+            <Select placeholder="בחר הגשה">
+              {submissionDetails.map((submission, index) => (
+                <Option key={index} value={submission.name}>
+                  {submission.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Modal
         title={`אישור מחיקה`}
         open={deleteAllSubmissionsConfirm !== null}
@@ -924,7 +979,12 @@ const Submissions = () => {
             <Tooltip title="מחיקת הגשה">
               <DeleteOutlined className="delete-icon" onClick={() => setDeleteSubmission(submissionInfo)} />
             </Tooltip>
-            <Button type="primary" key="back" onClick={() => setSubmissionInfo(null)}>
+            <Button
+              type="primary"
+              key="back"
+              onClick={() => {
+                setSubmissionInfo(null);
+              }}>
               סגור
             </Button>
           </div>
@@ -1153,7 +1213,10 @@ const Submissions = () => {
         okText="ערוך"
         cancelText="סגור"
         onOk={() => onOkHandlerEdit()}
-        onCancel={() => setEditSubmissions(false)}>
+        onCancel={() => {
+          setEditSubmissions(false);
+          editSubmission.resetFields();
+        }}>
         <Form layout="vertical" form={editSubmission}>
           <p>
             <span style={{ color: "red", fontWeight: 600 }}>שים לב</span> - העריכה משנה את כל ההגשות הזמינות עם שם זה
