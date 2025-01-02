@@ -805,10 +805,10 @@ const Submissions = () => {
               סגור
             </Button>
             <div className="modal-footer-action">
-              <Button key="extra1" type="primary" onClick={() => console.log("Extra Action 1")}>
+              <Button key="extra1" type="primary" onClick={() => assignJudgesAutomatically()}>
                 הקצאה רגילה
               </Button>
-              <Button key="extra2" type="primary" onClick={() => console.log("Extra Action 2")}>
+              <Button key="extra2" type="primary" onClick={() => console.log("W.I.P")}>
                 הקצאה חכמה
               </Button>
             </div>
