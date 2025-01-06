@@ -41,21 +41,20 @@ const corsOptions = {
 // Apply CORS globally
 app.use(cors(corsOptions));
 
-  // origin: process.env.CORS_ORIGIN, // Allow all origins for Development purposes only
+// origin: process.env.CORS_ORIGIN, // Allow all origins for Development purposes only
 app.use(
   session({
     secret: process.env.SESSION_SECRET, // Set a strong secret in .env file
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
+      mongoUrl: process.env.NODE_ENV === "production" ? process.env.MONGO_URI : process.env.MONGO_URI_LOCAL,
       collectionName: "sessions",
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // Cookie will expire after 1 day
       secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Use Lax for local development
-      // sameSite: "None", // Use Lax for local development
     },
   }),
 );
