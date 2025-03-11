@@ -46,8 +46,11 @@ const GradeSubmission = () => {
         if (error.response.status === 403) {
           message.error("אין לך הרשאה לגשת לדף זה");
           navigate(-1);
+        } else if (error.response.status === 404 || error.response.status === 400) {
+          navigate("/wrong-path");
+        } else {
+          message.error("שגיאה בטעינת נתוני הפרויקט");
         }
-        message.error("שגיאה בטעינת נתוני הפרויקט");
         setLoading(false);
       }
     };

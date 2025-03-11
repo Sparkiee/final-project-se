@@ -1,7 +1,20 @@
 .wrong-path {
-  width: 100%;
-  height: 100%;
-  /* background-color: #81c6fd; */
-  background-color: #7e9ab2;
+  &.not-logged-in {
+    position: relative;
+    background-image: linear-gradient(130deg, rgba(0, 107, 255, 0.5), rgba(196, 215, 255, 0.5));
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+  }
 
+  .project-management-logo {
+    width: 13rem;
+  }
+
+  .collage-logo {
+    width: 30rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }

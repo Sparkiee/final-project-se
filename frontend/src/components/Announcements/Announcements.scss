@@ -1,38 +1,37 @@
 .announcements-container {
-    .create-announcement {
-        margin: 0 auto;
-        width: 50%;
-    }
+  .create-announcement {
+    margin: 0 auto;
+    width: 50%;
+  }
 
-    .announcements-board {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
+  .announcements-board {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-    .form-input-group {
-        label {
-            font-size: 1.5rem;
-        }
-        .announcement-form-label {
-            font-size: 1.5rem;
-            margin-right: 1.5rem;
-        }
+  .form-input-group {
+    label {
+      font-size: 1.8rem;
     }
+    .announcement-form-label {
+      font-size: 2rem;
+    }
+  }
 }
 
 @media screen and (max-width: 1600px) {
-    .announcements-container {
-        .create-announcement {
-            width: 75%;
-        }
+  .announcements-container {
+    .create-announcement {
+      width: 75%;
     }
+  }
 }
 
 @media screen and (max-width: 626px) {
-    .announcements-container {
-        .create-announcement {
-            width: 90%;
-        }
+  .announcements-container {
+    .create-announcement {
+      width: 100%;
     }
+  }
 }

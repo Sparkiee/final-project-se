@@ -277,6 +277,11 @@ const UploadSubmissions = () => {
       }
     }
 
+    if (regularFileName === extraFileName) {
+      message.error("שמות הקבצים חייבים להיות שונים");
+      return;
+    }
+
     const regularFileNameWithProject = `${projectName}-${regularFileName}`;
     const extraFileNameWithProject = `${projectName}-${extraFileName}`;
 
@@ -292,7 +297,7 @@ const UploadSubmissions = () => {
     }
     formData.append("title", "");
     formData.append("description", "");
-    formData.append("destination", "submissions"); // Set destination for dynamic pathing
+    formData.append("destination", "submissions");
 
     try {
       // Send POST request to upload the file

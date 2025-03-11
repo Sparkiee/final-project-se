@@ -241,16 +241,25 @@
 }
 
 @media screen and (max-width: 1024) {
-
+  .project-container {
+    width: 95%;
+  }
 }
 
 @media screen and (max-width: 626px) {
   .project-container {
+    width: 100%;
+    .project-profile-header {
+      .project-title {
+        max-width: unset;
+      }
+    }
+    .project-profile-line {
+      width: 100%;
+    }
     .project-profile-content {
       width: 100%;
     }
-    
-
   }
   .project-profile-info-emails {
     display: flex;

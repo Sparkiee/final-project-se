@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./ProfilePage.scss";
 import axios from "axios";
 import { Avatar, Modal, message, Button, Form, Input, Alert } from "antd";
@@ -9,6 +9,7 @@ import { NotificationsContext } from "../../utils/NotificationsContext";
 
 const ProfilePage = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();
   const { fetchNotifications } = useContext(NotificationsContext);
   const [currentUser, setCurrentUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
@@ -60,6 +61,7 @@ const ProfilePage = () => {
         setUser(response.data);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
+        navigate("/wrong-path");
       }
     };
 

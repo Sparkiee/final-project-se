@@ -136,9 +136,17 @@ const HeaderMenu = () => {
 
   return (
     <div className="header-container">
-      <div className="site-upper-header-logo" onClick={() => navigate("/home")}>
-        <img src={projectManagementLogo} alt="project management logo" className="collage-logo" />
-        <h3>מערכת לניהול פרויקטים</h3>
+      <div className="site-upper-header-logo">
+        <img
+          src={projectManagementLogo}
+          alt="project management logo"
+          className="collage-logo"
+          onClick={() => navigate("/home")}
+          onMouseDown={(e) => handleMouseDown(e, "/home")}
+        />
+        <h3 onClick={() => navigate("/home")} onMouseDown={(e) => handleMouseDown(e, "/home")}>
+          מערכת לניהול פרויקטים
+        </h3>
       </div>
       <div className="site-upper-header-left">
         <Popover

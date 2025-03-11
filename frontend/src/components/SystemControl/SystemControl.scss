@@ -58,4 +58,15 @@
       justify-content: space-between;
     }
   }
+
+  .site-output {
+    .output-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+  }
 }

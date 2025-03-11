@@ -1,6 +1,3 @@
-// .float-button-actions {
-//   display: flex;
-//   gap: 1rem;
 .submission-actions {
   left: 5rem;
   bottom: 5rem;
@@ -9,7 +6,6 @@
     height: 5rem;
   }
 }
-// }
 
 .floatbutton-wrapper {
   position: fixed;
@@ -43,7 +39,7 @@
   margin-bottom: 1rem;
   .action-buttons-end {
     display: flex;
-    margin-right: auto; /* Push the button to the opposite end */
+    margin-right: auto;
     gap: 1rem;
   }
 }
@@ -207,6 +203,11 @@
           font-size: 2rem;
         }
       }
+    }
+  }
+  .details-title {
+    h3 {
+      font-size: 2rem;
     }
   }
 }

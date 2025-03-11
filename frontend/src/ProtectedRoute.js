@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children, privileges = [] }) => {
           const userHasPrivilege = privileges.some((role) => userRoles[role]);
           setHasPrivilege(userHasPrivilege);
           if (!userHasPrivilege) {
-            navigate("/home");
+            navigate("/403");
           }
         } else {
           setIsAuthenticated(false);
@@ -71,9 +71,9 @@ const ProtectedRoute = ({ children, privileges = [] }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Redirect to home if authenticated but lacks privileges
+  // Redirect to 403 if authenticated but lacks privileges
   if (!hasPrivilege) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/403" replace />;
   }
 
   // Render the child component if authenticated and has privileges

@@ -864,6 +864,12 @@ const Sidebar = () => {
                     >
                       הצגת משתמשים
                     </li>
+                    <li
+                      className={`${isActive("/create-users-file") ? "active" : ""}`}
+                      onClick={() => handleNavigate("/create-users-file")}
+                      onMouseDown={(e) => handleMouseDown(e, "/create-users-file")}>
+                      יצירת קובץ רישום
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -980,7 +986,7 @@ const Sidebar = () => {
                 </div>
               </li>
             )}
-            {user.isCoordinator && (
+            {/* {user.isCoordinator && (
               <li>
                 <div
                   className={`sidebar-option ${
@@ -993,7 +999,7 @@ const Sidebar = () => {
                   <span>מחיקת מערכת</span>
                 </div>
               </li>
-            )}
+            )} */}
           </ul>
         </div>
       </div>

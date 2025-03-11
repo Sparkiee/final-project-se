@@ -2,6 +2,7 @@ import express from "express";
 import {
   getProjects,
   createProject,
+  getProjectsByYear,
   getProjectsNoStudent,
   checkIfUserIsCandidate,
   approveCandidate,
@@ -41,12 +42,14 @@ import {
   approveProjectSuggestion,
   rejectProjectSuggestion,
   deleteProjectSuggestion,
+  calculateFinalGrades,
 } from "../controllers/projectController.js";
 import { ensureAuthenticated, isAdvisorOrCoordinator, isCoordinator } from "../middleware/auth.js";
 
 const router = express.Router();
 
 router.get("/", getProjects);
+router.get("/get-projects-by-year/:year", getProjectsByYear);
 router.post("/create-project", ensureAuthenticated, isAdvisorOrCoordinator, createProject);
 router.get("/available-projects", ensureAuthenticated, getAvailableProjects);
 router.get("/get-active-projects", getActiveProjects);
@@ -87,5 +90,6 @@ router.get("/get-project-suggestions", ensureAuthenticated, getProjectSuggestion
 router.post("/approve-project-suggestion/:id", ensureAuthenticated, isCoordinator, approveProjectSuggestion);
 router.post("/reject-project-suggestion/:id", ensureAuthenticated, isCoordinator, rejectProjectSuggestion);
 router.delete("/delete-project-suggestion/:id", ensureAuthenticated, deleteProjectSuggestion);
+router.get("/calculate-final-grades", ensureAuthenticated, isCoordinator, calculateFinalGrades);
 
 export default router;

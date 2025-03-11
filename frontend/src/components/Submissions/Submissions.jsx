@@ -2009,7 +2009,7 @@ const Submissions = () => {
             ]}>
             <Select mode="multiple" placeholder="בחר פרויקטים" filterOption={filterOption}>
               {projects
-                .filter((project) => project.students.length !== 0 && project.advisors.length !== 0)
+                .filter((project) => (yearFilter === "all" || project.year === yearFilter) && project.students.length !== 0 && project.advisors.length !== 0)
                 .map((project) => (
                   <Select.Option key={project._id} value={project._id}>
                     {project.title}

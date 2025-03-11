@@ -196,10 +196,10 @@ const ApproveExtraFile = () => {
       key: "actions",
       render: (text, record) => (
         <div className="approve-extra-file-actions">
-          <Button color="cyan" variant="solid" onClick={() => handleApproveExtraUpload(record.key)}>
+          <Button color="cyan" variant="filled" onClick={() => handleApproveExtraUpload(record.key)}>
             אשר בקשה
           </Button>
-          <Button color="danger" variant="solid" onClick={() => handleDenyExtraUpload(record.key)}>
+          <Button color="danger" variant="filled" onClick={() => handleDenyExtraUpload(record.key)}>
             דחה בקשה
           </Button>
         </div>

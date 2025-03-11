@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -36,6 +36,8 @@ import SuggestProject from "./components/SuggestProject/SuggestProject";
 import ApproveProjects from "./components/ApproveProjects/ApproveProjects";
 import GradeDistribution from "./components/GradeDistribution/GradeDistribution";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import ForbiddenPage from "./components/ForbiddenPage/ForbiddenPage";
+import CreateUserFile from "./components/CreateUser/CreateUserFile";
 
 function App() {
   return (
@@ -47,13 +49,22 @@ function App() {
 
 const MainLayout = () => {
   const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
+  }, [location.pathname]);
+
   const noSidebarRoutes = ["/login", "/", "*", "/reset-password/:token"];
-  const shouldDisplaySidebar = !noSidebarRoutes.some((route) => {
-    if (route === "*") {
-      return location.pathname === "*";
-    }
-    return new RegExp(`^${route.replace(/:\w+/g, "\\w+")}$`).test(location.pathname);
-  });
+  const shouldDisplaySidebar =
+    isLoggedIn &&
+    !noSidebarRoutes.some((route) => {
+      if (route === "*") {
+        return location.pathname === "*";
+      }
+      return new RegExp(`^${route.replace(/:\w+/g, "\\w+")}$`).test(location.pathname);
+    });
 
   useEffect(() => {
     const routeTitles = {
@@ -88,6 +99,7 @@ const MainLayout = () => {
       "/suggest-project": "הצעת פרויקט",
       "/approve-projects": "אישור פרויקטים",
       "/reset-password/:token": "איפוס סיסמה",
+      "/403": "אין הרשאה",
     };
 
     const currentPath = Object.keys(routeTitles).find((path) =>
@@ -99,7 +111,7 @@ const MainLayout = () => {
 
   return (
     <>
-      {/* Display the sidebar only if the route is not in noSidebarRoutes */}
+      {/* Display the sidebar only if the route is not in noSidebarRoutes and user is logged in */}
       {shouldDisplaySidebar && <Sidebar />}
       {/* Render content-container only when the sidebar is visible */}
       {shouldDisplaySidebar ? (
@@ -214,6 +226,14 @@ const MainLayout = () => {
                 element={
                   <ProtectedRoute privileges={["coordinator"]}>
                     <ShowAllUsers />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/create-users-file"
+                element={
+                  <ProtectedRoute privileges={["coordinator"]}>
+                    <CreateUserFile />
                   </ProtectedRoute>
                 }
               />
@@ -346,15 +366,8 @@ const MainLayout = () => {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="*"
-                element={
-                  <ProtectedRoute privileges={["student", "advisor", "judge", "coordinator"]}>
-                    <HomePage />
-                  </ProtectedRoute>
-                }
-              />
-              {/* Development route */}
+              <Route path="/403" element={<ForbiddenPage />} />
+              <Route path="*" element={<WrongPath />} />
             </Routes>
           </div>
         </div>

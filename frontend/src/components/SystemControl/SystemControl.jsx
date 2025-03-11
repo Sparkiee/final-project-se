@@ -18,11 +18,13 @@ import {
 import { EditOutlined, SaveOutlined, StopOutlined } from "@ant-design/icons";
 import { toJewishDate, formatJewishDateInHebrew } from "jewish-date";
 import { NotificationsContext } from "../../utils/NotificationsContext";
+import { downloadProjectExcel, downloadGradesExcel } from "../../utils/ProjectTableExcel";
 
 const SystemControl = () => {
   const [manageStudents, setManageStudents] = useState(true);
   const { fetchNotifications } = useContext(NotificationsContext);
   const [currentYear, setCurrentYear] = useState("");
+  const [outputYear, setOutputYear] = useState("");
   const [years, setYears] = useState([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -90,11 +92,12 @@ const SystemControl = () => {
       setManageStudents(response.data.projectStudentManage);
       const currentYear = response.data.currentYear;
       setCurrentYear(currentYear);
+      setOutputYear(currentYear);
 
       const today = new Date();
       const currentHebrewDate = toJewishDate(today);
 
-      // // Format years into Hebrew letters
+      // Format years into Hebrew letters
       const formattedCurrentYear = formatJewishDateInHebrew(currentHebrewDate).split(" ").pop().replace(/^ה/, ""); // Remove "ה" prefix if needed
 
       // Create new Date objects for previous and next years to avoid mutating 'today'
@@ -424,6 +427,40 @@ const SystemControl = () => {
     }
   };
 
+  const handleDownloadProjectsExcel = async (year) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/project/get-projects-by-year/${year}`,
+        {
+          withCredentials: true,
+        }
+      );
+      downloadProjectExcel(response.data, year);
+    } catch (error) {
+      console.error("Error downloading projects excel:", error);
+      message.error("שגיאה בהורדת קובץ הפרויקטים");
+    }
+  };
+
+  const handleDownloadGradesExcel = async (year) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/project/calculate-final-grades`, {
+        params: { year },
+        withCredentials: true,
+      });
+      const projectsWithGrades = response.data.filter((project) => project.totalGrade !== null);
+
+      if (projectsWithGrades.length !== 0) {
+        downloadGradesExcel(projectsWithGrades, year);
+      } else {
+        message.info("אין ציונים זמינים להורדה");
+      }
+    } catch (error) {
+      console.error("Error downloading grades excel:", error);
+      message.error("שגיאה בהורדת קובץ הציונים");
+    }
+  };
+
   return (
     <div className="system">
       <h1 className="system-title">לוח בקרת מערכת</h1>
@@ -527,6 +564,36 @@ const SystemControl = () => {
             </div>
           ))}
           {Object.keys(submissionGroups).length === 0 && <p>אין הגשות זמינות לפרסום</p>}
+        </div>
+        <div className="box site-output">
+          <h3 className="box-title">פלט האתר</h3>
+          <div className="output-item">
+            <label className="output-label">בחירת שנה</label>
+            <Select
+              style={{ width: "100px" }}
+              value={outputYear}
+              onChange={(value) => {
+                setOutputYear(value);
+              }}>
+              {years.map((year) => (
+                <Select.Option key={year} value={year}>
+                  {year}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
+          <div className="output-item">
+            <label className="output-label">פרויקטים</label>
+            <Button type="primary" onClick={() => handleDownloadProjectsExcel(outputYear)}>
+              הורדת קובץ
+            </Button>
+          </div>
+          <div className="output-item">
+            <label className="output-label">ציונים</label>
+            <Button type="primary" onClick={() => handleDownloadGradesExcel(outputYear)}>
+              הורדת קובץ
+            </Button>
+          </div>
         </div>
       </div>
       <Form form={form} component={false} loading={loading}>

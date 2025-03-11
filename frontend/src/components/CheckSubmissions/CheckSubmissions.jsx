@@ -194,7 +194,7 @@ const CheckSubmissions = () => {
                     </div>
                   }
                   description={
-                    item.gotExtraUpload ? "2 קבצים מצורפים" : item.file.filename ? item.file.filename : "הגשה ללא קובץ"
+                    item.gotExtraUpload ? "2 קבצים מצורפים" : item.file?.filename ? item.file.filename : "הגשה ללא קובץ"
                   }
                 />
                 {windowSize.width > 626 && <div className="submission-details">{renderSubmissionDetails(item)}</div>}
@@ -260,7 +260,7 @@ const CheckSubmissions = () => {
                     </div>
                   }
                   description={
-                    item.gotExtraUpload ? "2 קבצים מצורפים" : item.file.filename ? item.file.filename : "הגשה ללא קובץ"
+                    item.gotExtraUpload ? "2 קבצים מצורפים" : item.file?.filename ? item.file.filename : "הגשה ללא קובץ"
                   }
                 />
                 <div className="submission-details">{renderSubmissionDetails(item)}</div>
@@ -320,7 +320,7 @@ const CheckSubmissions = () => {
                     </div>
                   }
                   description={
-                    item.gotExtraUpload ? "2 קבצים מצורפים" : item.file.filename ? item.file.filename : "הגשה ללא קובץ"
+                    item.gotExtraUpload ? "2 קבצים מצורפים" : item.file?.filename ? item.file.filename : "הגשה ללא קובץ"
                   }
                 />
                 <div className="submission-details">{renderSubmissionDetails(item)}</div>
