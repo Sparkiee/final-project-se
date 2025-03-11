@@ -38,6 +38,7 @@ import GradeDistribution from "./components/GradeDistribution/GradeDistribution"
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import ForbiddenPage from "./components/ForbiddenPage/ForbiddenPage";
 import CreateUserFile from "./components/CreateUser/CreateUserFile";
+import ChatPage from "./components/Chat/ChatPage";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ const MainLayout = () => {
       "/profile/:userId": "פרופיל",
       "/home": "דף הבית",
       "/announcements": "הודעות",
+      "/chat": "צ'אט",
       "/projects": "פרויקטים",
       "/project/:projectID": "דף פרויקט",
       "/templates": "תבניות",
@@ -150,6 +152,14 @@ const MainLayout = () => {
                 element={
                   <ProtectedRoute privileges={["student", "advisor", "judge", "coordinator"]}>
                     <Projects />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat"
+                element={
+                  <ProtectedRoute privileges={["student", "advisor", "judge", "coordinator"]}>
+                    <ChatPage />
                   </ProtectedRoute>
                 }
               />
