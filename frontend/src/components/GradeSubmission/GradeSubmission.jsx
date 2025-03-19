@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Form, Input, Select, message, Spin } from "antd";
 import { NotificationsContext } from "../../utils/NotificationsContext";
+import WrongPath from "../WrongPath/WrongPath";
 
 const GradeSubmission = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const GradeSubmission = () => {
   const { submissionId } = useParams();
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const letterGrades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "E", "F"];
 
   useEffect(() => {
@@ -47,7 +49,7 @@ const GradeSubmission = () => {
           message.error("אין לך הרשאה לגשת לדף זה");
           navigate(-1);
         } else if (error.response.status === 404 || error.response.status === 400) {
-          navigate("/wrong-path");
+          setError(true);
         } else {
           message.error("שגיאה בטעינת נתוני הפרויקט");
         }
@@ -87,6 +89,10 @@ const GradeSubmission = () => {
   const onReset = () => {
     form.resetFields();
   };
+
+  if (error) {
+    return <WrongPath />;
+  }
 
   return (
     <div className="grade-project-container">

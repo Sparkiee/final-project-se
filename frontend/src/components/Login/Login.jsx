@@ -291,10 +291,10 @@ const Login = () => {
           {tempUserData?.isAdvisor && (
             <Form.Item
               name="interests"
-              label="תחומי עניין (ניתן לשנות אחר כך בפרופיל)"
+              label="תחומי עניין אקדמיים (ניתן לשנות אחר כך בפרופיל)"
               hasFeedback
-              rules={[{ required: true, message: "חובה להזין תחומי עניין" }]}>
-              <Input placeholder="הכנס תחומי עניין" />
+              rules={[{ required: true, message: " חובה להזין תחומי עניין אקדמיים" }]}>
+              <Input placeholder="הכנס תחומי עניין אקדמיים" />
             </Form.Item>
           )}
           <Form.Item className="change-password-button">

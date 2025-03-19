@@ -6,6 +6,7 @@ import { Avatar, Modal, message, Button, Form, Input, Alert } from "antd";
 import { MailOutlined, IdcardOutlined, UserOutlined } from "@ant-design/icons";
 import { fetchUserProjectStatistics, renderUserProjectStatisticsChart } from "../../utils/basicStatistics";
 import { NotificationsContext } from "../../utils/NotificationsContext";
+import WrongPath from "../WrongPath/WrongPath";
 
 const ProfilePage = () => {
   const { userId } = useParams();
@@ -24,6 +25,7 @@ const ProfilePage = () => {
   const [changePasswordForm] = Form.useForm();
   const statisticsChartRef = useRef(null);
   const statisticsChartInstance = useRef(null);
+  const [error, setError] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -61,7 +63,7 @@ const ProfilePage = () => {
         setUser(response.data);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
-        navigate("/wrong-path");
+        setError(true);
       }
     };
 
@@ -136,6 +138,10 @@ const ProfilePage = () => {
         message.error("העתקת האימייל נכשלה");
       });
   };
+
+  if (error) {
+    return <WrongPath />;
+  }
 
   return (
     <div className="profile-page">

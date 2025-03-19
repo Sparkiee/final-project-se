@@ -338,11 +338,13 @@ const SuggestProject = () => {
               },
             ]}>
             <Select mode="single" placeholder="בחר סטודנט" showSearch filterOption={filterOption}>
-              {studentsNoProject.map((student) => (
-                <Option key={student.id} value={student.id}>
-                  {student.name}
-                </Option>
-              ))}
+              {studentsNoProject
+                .filter((student) => student.id !== currentUser.id)
+                .map((student) => (
+                  <Option key={student.id} value={student.id}>
+                    {student.name}
+                  </Option>
+                ))}
             </Select>
           </Form.Item>
 

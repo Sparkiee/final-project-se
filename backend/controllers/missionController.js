@@ -5,7 +5,7 @@ import Notification from "../models/notifications.js";
 // Create a new mission
 export const createMission = async (req, res) => {
   try {
-    const { projectId, assignees, ...missionData } = req.body;
+    const { projectId, assignees = [], ...missionData } = req.body;
     // Create the new mission
     const mission = new Mission({ ...missionData, assignees });
     await mission.save();
@@ -20,13 +20,15 @@ export const createMission = async (req, res) => {
     await project.save();
 
     // Send notifications to assignees
-    const notifications = assignees
-      .filter((assigneeId) => assigneeId.toString() !== mission.author.toString())
-      .map((assigneeId) => ({
-        user: assigneeId,
-        message: `משימה חדשה: ${mission.name}`,
-      }));
-    await Notification.insertMany(notifications);
+    if (assignees.length > 0) {
+      const notifications = assignees
+        .filter((assigneeId) => assigneeId.toString() !== mission.author.toString())
+        .map((assigneeId) => ({
+          user: assigneeId,
+          message: `משימה חדשה: ${mission.name}`,
+        }));
+      await Notification.insertMany(notifications);
+    }
 
     res.status(201).json(mission);
   } catch (error) {

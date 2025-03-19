@@ -196,7 +196,7 @@ const SubmissionsStatus = () => {
       title: "שם סטודנט",
       dataIndex: "studentName",
       key: "studentName",
-      width: windowSize.width > 1600 ? "15%" : windowSize.width > 1200 ? "10%" : windowSize.width > 1024 ? 150 : 150,
+      width: windowSize.width > 1600 ? "15%" : windowSize.width > 1200 ? "15%" : windowSize.width > 1024 ? 150 : 150,
       render: (text, record) => (
         <div className="submission-status-students">
           {record.students.map((student, index) => (
@@ -233,7 +233,7 @@ const SubmissionsStatus = () => {
       title: "הגשות",
       dataIndex: "submissions",
       key: "submissions",
-      width: windowSize.width > 1600 ? "55%" : windowSize.width > 1200 ? "65%" : windowSize.width > 1024 ? 500 : 500,
+      width: windowSize.width > 1600 ? "55%" : windowSize.width > 1200 ? "60%" : windowSize.width > 1024 ? 500 : 500,
       render: (text, record) => (
         <div className="submission-status-submissions">
           {record.submissions.map((submission, index) => (

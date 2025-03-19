@@ -6,6 +6,7 @@ import { UserOutlined, LoadingOutlined } from "@ant-design/icons";
 import "./ProjectPage.scss";
 import { processContent } from "../../utils/htmlProcessor";
 import { NotificationsContext } from "../../utils/NotificationsContext";
+import WrongPath from "../WrongPath/WrongPath";
 
 const ProjectPage = () => {
   const { projectID } = useParams();
@@ -17,6 +18,7 @@ const ProjectPage = () => {
   const [hasProject, setHasProject] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingProject, setIsLoadingProject] = useState(true);
+  const [error, setError] = useState(false);
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : {};
@@ -29,13 +31,13 @@ const ProjectPage = () => {
           withCredentials: true,
         });
         if (!response.data) {
-          navigate("/wrong-path");
+          setError(true);
         } else {
           setProjectData(response.data);
         }
       } catch (error) {
         console.error("Error occurred:", error);
-        navigate("/wrong-path");
+        setError(true);
       } finally {
         setIsLoadingProject(false);
       }
@@ -181,6 +183,10 @@ const ProjectPage = () => {
         <Spin size="large" />
       </div>
     );
+  }
+
+  if (error) {
+    return <WrongPath />;
   }
 
   return (

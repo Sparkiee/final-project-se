@@ -469,7 +469,7 @@ const MoreInformation = () => {
       ),
     },
     {
-      title: "תחומי עניין",
+      title: "תחומי עניין אקדמיים",
       dataIndex: "interests",
       key: "interests",
       width: windowSize.width > 768 ? "22.5%" : 300,

@@ -71,27 +71,29 @@ const OverviewProjects = () => {
         const activeUsers = usersRes.data.filter((user) => !user.suspended);
 
         const projectWithCandidates = await Promise.all(
-          projectsRes.data.map(async (project) => {
-            const candidates = await Promise.all(
-              project.candidates.map(async (candidate) => {
-                const candidateUser = activeUsers.find((user) => user._id === candidate.student);
-                const hasProjectResponse = await axios.get(
-                  `${process.env.REACT_APP_BACKEND_URL}/api/user/check-user-has-projects/${candidate.student}`,
-                  { withCredentials: true }
-                );
-                return {
-                  ...candidate,
-                  ...candidateUser,
-                  hasProject: hasProjectResponse.data.hasProject,
-                  status: project.students.some((student) => student.student === candidate.student),
-                };
-              })
-            );
-            return {
-              ...project,
-              candidates,
-            };
-          })
+          projectsRes.data
+            .filter((project) => project.studentSuggestions?.stage !== 1)
+            .map(async (project) => {
+              const candidates = await Promise.all(
+                project.candidates.map(async (candidate) => {
+                  const candidateUser = activeUsers.find((user) => user._id === candidate.student);
+                  const hasProjectResponse = await axios.get(
+                    `${process.env.REACT_APP_BACKEND_URL}/api/user/check-user-has-projects/${candidate.student}`,
+                    { withCredentials: true }
+                  );
+                  return {
+                    ...candidate,
+                    ...candidateUser,
+                    hasProject: hasProjectResponse.data.hasProject,
+                    status: project.students.some((student) => student.student === candidate.student),
+                  };
+                })
+              );
+              return {
+                ...project,
+                candidates,
+              };
+            })
         );
 
         setProjects(projectWithCandidates);

@@ -1539,7 +1539,6 @@ export const getProjectSuggestions = async (req, res) => {
   try {
     const projects = await Project.find({
       $or: [{ "studentSuggestions.stage": 1 }, { "studentSuggestions.stage": 2 }],
-      isTerminated: false,
     })
       .populate("studentSuggestions.suggestedBy")
       .populate("candidates.student");
