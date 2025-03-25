@@ -517,10 +517,24 @@ export const assignJudgesAI = async (req, res) => {
         return acc;
     }, {});
 
-    // Usage example
-    console.log(projectTexts); // Array of all project text strings
-    console.log(projectEmbeddingMap); // Object mapping project IDs to their embeddings
+    const interestsText = Object.entries(workload).map(([id, advisor]) => advisor.interests);
+    const interestsEmbeddings = await getEmbedding(interestsText);
+    const interestsEmbeddingMap = Object.keys(workload).reduce((acc, id, index) => {
+        acc[id] = interestsEmbeddings[index];
+        return acc;
+    }, {});
+
+    // adding embedding into projectDetails and workload objects
+    for (const [key, value] of Object.entries(projectEmbeddingMap)) {
+        projectDetails[key].embedding = value.embedding;
+    }
+
+    for (const [key, value] of Object.entries(interestsEmbeddingMap)) {
+      workload[key].embedding = value.embedding;
+    }
+
     res.status(200).json({ message: "Judges assigned successfully" });
+
     //   let prompt = `
     //     I have a list of projects and advisors. Each project has a title, description, and an advisor. Each advisor has a quota, current assignments, and interests.
 
