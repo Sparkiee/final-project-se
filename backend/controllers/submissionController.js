@@ -503,15 +503,7 @@ export const assignJudgesAI = async (req, res) => {
         };
     }
 
-    // console.log(workload);
-    // console.log(projectDetails);
-    // let result = Object.entries(projectDetails)
-    //     .map(([id, project]) => ({
-    //         id,
-    //         ...project,
-    //     }))
-    //     .map((project) => `${project.title} - ${stripHTML(project.description)}`);
-
+    // Extract project texts for generating embeddings
     const projectTexts = Object.entries(projectDetails).map(
         ([id, project]) => `${project.title} - ${stripHTML(project.description)}`,
     );
