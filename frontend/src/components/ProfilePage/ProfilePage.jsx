@@ -155,18 +155,18 @@ const ProfilePage = () => {
         <div className="profile-page-header-info">
           <h1>{user?.name}</h1>
           <h3 onClick={handleEmailClick} className="copy-email">
-            <MailOutlined /> {user?.email}
+            <MailOutlined /> <p>{user?.email}</p>
           </h3>
           {(currentUser.isCoordinator || currentUser._id === user?._id) && (
             <div className="private-info">
               {((currentUser.isCoordinator && (user?.isAdvisor || user?.isJudge || user?.isCoordinator)) ||
                 (currentUser._id === user?._id && currentUser.isAdvisor)) && (
                 <h3>
-                  <InterestsSVG /> תחומי עניין: {user?.interests || "לא צוין"}
+                  <InterestsSVG /> <p>תחומי עניין: {user?.interests || "לא צוין"}</p>
                 </h3>
               )}
               <h3>
-                <IdcardOutlined /> {user?.id}
+                <IdcardOutlined /> <p>{user?.id}</p>
               </h3>
               <div className="user-type">
                 <h3>
