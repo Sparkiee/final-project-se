@@ -1,10 +1,5 @@
 import mongoose from "mongoose";
 
-const numericValuesSchema = new mongoose.Schema({
-  letter: { type: String, required: true },
-  value: { type: Number, required: true },
-});
-
 const submissionSchema = new mongoose.Schema(
   {
     project: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
@@ -19,7 +14,7 @@ const submissionSchema = new mongoose.Schema(
     submissionInfo: { type: String, default: "" },
     uploadDate: { type: Date },
     uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    numericValues: { type: [numericValuesSchema], default: [] },
+    gradingTable: { type: mongoose.Schema.Types.ObjectId, ref: "GradingTable", required: false },
     editable: { type: Boolean, default: true },
     askForExtraUpload: { type: Boolean, default: false },
     requestExtraUploadDate: { type: Date },
@@ -43,7 +38,6 @@ const submissionSchema = new mongoose.Schema(
       },
       required: false,
     },
-    averageCalculation: { type: Boolean, default: false }, // If false -> calculate by median | If true -> calculate by average
   },
   { timestamps: true }
 );

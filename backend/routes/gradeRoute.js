@@ -8,6 +8,7 @@ import {
   getAllNumericValues,
   publishGrades,
   updateCalculationMethod,
+  deleteGradingTable,
 } from "../controllers/gradeController.js";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.put("/update-numeric-values", ensureAuthenticated, isCoordinator, updateN
 router.get("/get-all-numeric-values", ensureAuthenticated, getAllNumericValues);
 router.post("/publish-grades", ensureAuthenticated, isCoordinator, publishGrades);
 router.put("/update-calculation-method", ensureAuthenticated, isCoordinator, updateCalculationMethod);
+router.delete("/delete-grading-table", ensureAuthenticated, isCoordinator, deleteGradingTable);
 
 export default router;
