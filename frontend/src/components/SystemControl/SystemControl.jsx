@@ -73,6 +73,7 @@ const SystemControl = () => {
   }, []);
 
   const fetchGrades = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/grade/get-all-numeric-values`, {
         withCredentials: true,
@@ -665,6 +666,8 @@ const SystemControl = () => {
         <Form form={form} component={false} loading={loading}>
           <Table
             style={{ width: "100%" }}
+            loading={loading}
+            showSorterTooltip={false}
             components={{
               body: {
                 cell: EditableCell,

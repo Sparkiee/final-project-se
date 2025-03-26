@@ -777,7 +777,7 @@ const OverviewProjects = () => {
                     )}
                     {submission.isReviewed &&
                       !submission.isGraded &&
-                      (!grade.editable ? (
+                      (grade.videoQuality ? (
                         <Badge color="green" text="ניתן משוב" />
                       ) : (
                         <Badge color="red" text="לא ניתן משוב" />
@@ -1332,6 +1332,11 @@ const OverviewProjects = () => {
                     name: submission.name,
                     judges: submission.gradesDetailed.map((grade) => grade.judge),
                   })),
+                  extraData: projectSubmissions.map((submission) => ({
+                    isGraded: submission.isGraded,
+                    isReviewed: submission.isReviewed,
+                    editable: submission.editable,
+                  })),
                 });
                 setIsJudgesModalOpen(true);
               }}>
@@ -1840,7 +1845,10 @@ const OverviewProjects = () => {
                 value: user._id,
               }))}
               filterOption={filterOption}
-              disabled={submission.editable}
+              disabled={
+                !selectedSubmission?.extraData[index].editable ||
+                (!selectedSubmission?.extraData[index].isGraded && !selectedSubmission?.extraData[index].isReviewed)
+              }
             />
           </div>
         ))}
