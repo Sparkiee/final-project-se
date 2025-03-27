@@ -33,6 +33,10 @@ import { toJewishDate, formatJewishDateInHebrew } from "jewish-date";
 
 const Submissions = () => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : {};
+  });
   const { TextArea } = Input;
   const { Option } = Select;
   const { fetchNotifications } = useContext(NotificationsContext);
@@ -341,6 +345,7 @@ const Submissions = () => {
       let isGraded = false;
       let isReviewed = false;
       let fileNeeded = false;
+      let noJudges = false;
       switch (submissionType) {
         case "proposalReport":
           name = "דוח הצעה";
@@ -377,6 +382,9 @@ const Submissions = () => {
           fileNeeded = Array.isArray(values.submissionChecklist)
             ? values.submissionChecklist.includes("fileNeeded")
             : false;
+          noJudges = Array.isArray(values.submissionChecklist)
+            ? values.submissionChecklist.includes("noJudges")
+            : false;
           break;
       }
       let submissionDate = dayjs(values.submissionDate);
@@ -401,6 +409,8 @@ const Submissions = () => {
           isGraded: isGraded,
           isReviewed: isReviewed,
           fileNeeded: fileNeeded,
+          noJudges: noJudges,
+          currentUser: currentUser._id,
           groups: [selectedGroupSubmissions],
         },
         {
@@ -449,15 +459,16 @@ const Submissions = () => {
           fileNeeded: Array.isArray(values.submissionChecklist)
             ? values.submissionChecklist.includes("fileNeeded")
             : false,
+          noJudges: Array.isArray(values.submissionChecklist) ? values.submissionChecklist.includes("noJudges") : false,
         },
         {
           withCredentials: true,
         }
       );
-      message.info(`הגשה ${specificSubmissionInfo.submission.name} עודכנה בהצלחה`);
+      message.success(`ההגשה עודכנה בהצלחה!`);
     } catch (error) {
       console.error("Error updating submission:", error);
-      message.error("שגיאה בעדכון ההגשה");
+      message.error("שגיאה בעדכון ההגשה.");
     } finally {
       editSpecificSubmission.resetFields();
       setSpecificSubmissionInfo(null);
@@ -501,6 +512,7 @@ const Submissions = () => {
       let isGraded = false;
       let isReviewed = false;
       let fileNeeded = false;
+      let noJudges = false;
       switch (values.submissionType) {
         case "proposalReport":
           name = "דוח הצעה";
@@ -537,6 +549,9 @@ const Submissions = () => {
           fileNeeded = Array.isArray(values.submissionChecklist)
             ? values.submissionChecklist.includes("fileNeeded")
             : false;
+          noJudges = Array.isArray(values.submissionChecklist)
+            ? values.submissionChecklist.includes("noJudges")
+            : false;
           break;
       }
       let submissionDate = dayjs(values.submissionDate);
@@ -562,6 +577,8 @@ const Submissions = () => {
           isGraded: isGraded,
           isReviewed: isReviewed,
           fileNeeded: fileNeeded,
+          noJudges: noJudges,
+          currentUser: currentUser._id,
         },
         {
           withCredentials: true,
@@ -1427,6 +1444,7 @@ const Submissions = () => {
                       isGraded: values.submissionChecklist.includes("isGraded"),
                       isReviewed: values.submissionChecklist.includes("isReviewed"),
                       fileNeeded: values.submissionChecklist.includes("fileNeeded"),
+                      noJudges: values.submissionChecklist.includes("noJudges"),
                     },
                   };
                 }
@@ -1518,6 +1536,7 @@ const Submissions = () => {
               <Checkbox value="isGraded">מתן ציון</Checkbox>
               <Checkbox value="isReviewed">מתן משוב</Checkbox>
               <Checkbox value="fileNeeded">נדרש קובץ</Checkbox>
+              <Checkbox value="noJudges">ללא שופטים</Checkbox>
             </Checkbox.Group>
           </Form.Item>
         </Form>
@@ -1561,10 +1580,10 @@ const Submissions = () => {
                             submissionInfo.submission.isGraded ? "isGraded" : null,
                             submissionInfo.submission.isReviewed ? "isReviewed" : null,
                             submissionInfo.submission.fileNeeded ? "fileNeeded" : null,
+                            submissionInfo.submission.noJudges ? "noJudges" : null,
                           ].filter((value) => value !== null),
                         });
                         setSpecificSubmissionInfo(submissionInfo);
-                        // setSubmissionInfo(null);
                       }}
                     />
                   </a>
@@ -2073,6 +2092,7 @@ const Submissions = () => {
                 <Checkbox value="isGraded">מתן ציון</Checkbox>
                 <Checkbox value="isReviewed">מתן משוב</Checkbox>
                 <Checkbox value="fileNeeded">נדרש קובץ</Checkbox>
+                <Checkbox value="noJudges">ללא שופטים</Checkbox>
               </Checkbox.Group>
             </Form.Item>
           )}
@@ -2224,6 +2244,7 @@ const Submissions = () => {
                 <Checkbox value="isGraded">מתן ציון</Checkbox>
                 <Checkbox value="isReviewed">מתן משוב</Checkbox>
                 <Checkbox value="fileNeeded">נדרש קובץ</Checkbox>
+                <Checkbox value="noJudges">ללא שופטים</Checkbox>
               </Checkbox.Group>
             </Form.Item>
           )}

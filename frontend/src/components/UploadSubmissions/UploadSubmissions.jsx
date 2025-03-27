@@ -643,33 +643,63 @@ const UploadSubmissions = () => {
           )}
           <Divider />
           {gradeInfo?.isReviewed && (
-            <div className="reviews">
-              {gradeInfo.grades.map((grade, index) => (
-                <div className="review-container" key={index}>
-                  <div className="review">
-                    <div className="review-title">משוב ע"י שופט {index + 1}</div>
-                    <div className="review-item">
-                      <div className="review-header">משוב איכות הכתיבה:</div>
-                      <div className="review-content">{renderTextWithNewlines(grade?.videoQuality)}</div>
+            <>
+              {gradeInfo.grades.length > 1 ? (
+                <div className="reviews">
+                  {gradeInfo.grades.map((grade, index) => (
+                    <div className="review-container" key={index}>
+                      <div className="review">
+                        <div className="review-title">משוב ע"י שופט {index + 1}</div>
+                        <div className="review-item">
+                          <div className="review-header">משוב על איכות הסרטון:</div>
+                          <div className="review-content">{renderTextWithNewlines(grade?.videoQuality)}</div>
+                        </div>
+                        <div className="review-item">
+                          <div className="review-header">משוב על איכות העבודה:</div>
+                          <div className="review-content">{renderTextWithNewlines(grade?.workQuality)}</div>
+                        </div>
+                        <div className="review-item">
+                          <div className="review-header">משוב על איכות הכתיבה:</div>
+                          <div className="review-content">{renderTextWithNewlines(grade?.writingQuality)}</div>
+                        </div>
+                      </div>
+                      {index !== gradeInfo.grades.length - 1 && gradeInfo.grades.length > 1 && (
+                        <Divider
+                          type={windowSize.width > 626 ? "vertical" : "horizontal"}
+                          style={{
+                            height: windowSize.width > 626 && "100%",
+                            margin: windowSize.width > 626 && "0 5px",
+                          }}
+                        />
+                      )}
                     </div>
-                    <div className="review-item">
-                      <div className="review-header">משוב איכות העבודה:</div>
-                      <div className="review-content">{renderTextWithNewlines(grade?.workQuality)}</div>
-                    </div>
-                    <div className="review-item">
-                      <div className="review-header">משוב איכות הכתיבה:</div>
-                      <div className="review-content">{renderTextWithNewlines(grade?.writingQuality)}</div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <div className="single-review-container">
+                    <div className="review">
+                      <div className="review-item">
+                        <div className="review-header">משוב על איכות הסרטון:</div>
+                        <div className="review-content">
+                          {renderTextWithNewlines(gradeInfo.grades[0]?.videoQuality)}
+                        </div>
+                      </div>
+                      <div className="review-item">
+                        <div className="review-header add-margin">משוב על איכות העבודה:</div>
+                        <div className="review-content">{renderTextWithNewlines(gradeInfo.grades[0]?.workQuality)}</div>
+                      </div>
+                      <div className="review-item">
+                        <div className="review-header add-margin">משוב על איכות הכתיבה:</div>
+                        <div className="review-content">
+                          {renderTextWithNewlines(gradeInfo.grades[0]?.writingQuality)}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  {index !== gradeInfo.grades.length - 1 && gradeInfo.grades.length > 1 && (
-                    <Divider
-                      type={windowSize.width > 626 ? "vertical" : "horizontal"}
-                      style={{ height: windowSize.width > 626 && "100%", margin: windowSize.width > 626 && "0 5px" }}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+                </>
+              )}
+            </>
           )}
         </div>
       </Modal>

@@ -11,6 +11,7 @@ const submissionSchema = new mongoose.Schema(
     submissionDate: { type: Date },
     isReviewed: { type: Boolean, default: false },
     isGraded: { type: Boolean, default: false },
+    noJudges: { type: Boolean, default: false },
     submissionInfo: { type: String, default: "" },
     uploadDate: { type: Date },
     uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

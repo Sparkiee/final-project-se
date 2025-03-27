@@ -78,6 +78,30 @@
       }
     }
   }
+
+  .single-review-container {
+    display: flex;
+    width: 100%;
+    .review {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      .review-item {
+        display: flex;
+        flex-direction: column;
+        .review-header {
+          font-weight: bold;
+          color: #525252;
+        }
+        .add-margin {
+          margin-top: 2rem;
+        }
+        .review-content {
+          word-break: break-word;
+        }
+      }
+    }
+  }
 }
 
 .upload-submission-actions {
