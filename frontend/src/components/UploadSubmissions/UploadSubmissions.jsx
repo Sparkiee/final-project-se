@@ -603,7 +603,6 @@ const UploadSubmissions = () => {
         onCancel={() => setGradeInfo(null)}
         okButtonProps={{ style: { display: "none" } }}>
         <div className="grade-info">
-          <h3 style={{ color: "red", fontWeight: "bold" }}>שיבו לב - הציון הינו סופי ולא ניתן לערעור</h3>
           <div className="detail-item">
             <div className="detail-item-header">שם הפרויקט:</div>
             <div className="detail-item-content">{gradeInfo?.projectName}</div>
