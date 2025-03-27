@@ -1,6 +1,6 @@
 import * as tf from "@tensorflow/tfjs";
 
-function cosineSimilarity(vecA, vecB) {
+export function cosineSimilarity(vecA, vecB) {
     const tensorA = tf.tensor(vecA);
     const tensorB = tf.tensor(vecB);
 
