@@ -19,6 +19,9 @@ export const SocketProvider = ({ children }) => {
             withCredentials: true,
             transports: ["websocket", "polling"],
             autoConnect: true,
+            reconnection: true,
+            reconnectionAttempts: 10,
+            reconnectionDelay: 1000,
         });
 
         socketInstance.on("connect", () => {

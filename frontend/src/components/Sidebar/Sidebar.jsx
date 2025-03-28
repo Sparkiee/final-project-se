@@ -22,7 +22,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { handleMouseDown } from "../../utils/mouseDown";
 import Chat from "../Chat/Chat";
-import { useSocket } from "../../utils/SocketContext";
+// import { useSocket } from "../../utils/SocketContext";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Sidebar = () => {
     const [chatListOpen, setChatListOpen] = useState(false);
     const [selectedChats, setSelectedChats] = useState([]);
     const [chatFilter, setChatFilter] = useState("");
-    const { socket } = useSocket();
+    // const { socket } = useSocket();
     const [openSubmenus, setOpenSubmenus] = useState({
         myProject: false,
         myProjects: false,
@@ -108,100 +108,100 @@ const Sidebar = () => {
         }
     };
 
-    useEffect(() => {
-        if (!socket) return;
-        socket.on("connect", () => {
-            if (chats?.length) {
-                socket.emit(
-                    "join_chats",
-                    chats.map((chat) => chat._id),
-                );
-            }
-        });
+    // useEffect(() => {
+    //     if (!socket) return;
+    //     socket.on("connect", () => {
+    //         if (chats?.length) {
+    //             socket.emit(
+    //                 "join_chats",
+    //                 chats.map((chat) => chat._id),
+    //             );
+    //         }
+    //     });
 
-        socket.on("reconnect", () => {
-            console.log("Reconnected! Rejoining chats...");
-            if (chats?.length) {
-                socket.emit(
-                    "join_chats",
-                    chats.map((chat) => chat._id),
-                );
-            }
-        });
+    //     socket.on("reconnect", () => {
+    //         console.log("Reconnected! Rejoining chats...");
+    //         if (chats?.length) {
+    //             socket.emit(
+    //                 "join_chats",
+    //                 chats.map((chat) => chat._id),
+    //             );
+    //         }
+    //     });
 
-        socket.on("receive_chat", (newChat, newMessage) => {
-            setChats((prev) => {
-                const updatedChats = prev.map((chat) => {
-                    if (chat._id === newChat._id && chat.lastMessage !== newChat.lastMessage) {
-                        if (newMessage.sender._id !== user._id) {
-                            chat.unreadTotal++;
-                        }
-                        return {
-                            ...chat,
-                            lastMessage: newMessage,
-                        };
-                    }
-                    return chat;
-                });
-                return updatedChats;
-            });
-        });
+    //     socket.on("receive_chat", (newChat, newMessage) => {
+    //         setChats((prev) => {
+    //             const updatedChats = prev.map((chat) => {
+    //                 if (chat._id === newChat._id && chat.lastMessage !== newChat.lastMessage) {
+    //                     if (newMessage.sender._id !== user._id) {
+    //                         chat.unreadTotal++;
+    //                     }
+    //                     return {
+    //                         ...chat,
+    //                         lastMessage: newMessage,
+    //                     };
+    //                 }
+    //                 return chat;
+    //             });
+    //             return updatedChats;
+    //         });
+    //     });
 
-        socket.on("receive_new_chat", (chat) => {
-            setChats((prev) => {
-                const newChats = [chat, ...prev];
-                return newChats;
-            });
-            selectChat(chat);
-            socket.emit("join_chats", [chat._id.toString()]);
-        });
+    //     socket.on("receive_new_chat", (chat) => {
+    //         setChats((prev) => {
+    //             const newChats = [chat, ...prev];
+    //             return newChats;
+    //         });
+    //         selectChat(chat);
+    //         socket.emit("join_chats", [chat._id.toString()]);
+    //     });
 
-        return () => {
-            socket.off("connect");
-            socket.off("reconnect");
-            socket.off("receive_chat");
-        };
-    }, [socket, chats, user]);
+    //     return () => {
+    //         socket.off("connect");
+    //         socket.off("reconnect");
+    //         socket.off("receive_chat");
+    //     };
+    // }, [socket, chats, user]);
 
-    const fetchChats = async () => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/chat/`, {
-                withCredentials: true,
-            });
-            setChats(response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)));
-            // returning for socket purposes
-            // return response.data;
+    // const fetchChats = async () => {
+    //     try {
+    //         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/chat/`, {
+    //             withCredentials: true,
+    //         });
+    //         setChats(response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)));
+    //         // returning for socket purposes
+    //         // return response.data;
 
-            if (socket && response.data.length) {
-                socket.emit(
-                    "join_chats",
-                    response.data.map((chat) => chat._id),
-                );
-            }
-        } catch (error) {
-            console.error("Error occurred:", error);
-        }
-    };
+    //         if (socket && response.data.length) {
+    //             socket.emit(
+    //                 "join_chats",
+    //                 response.data.map((chat) => chat._id),
+    //             );
+    //         }
+    //     } catch (error) {
+    //         console.error("Error occurred:", error);
+    //     }
+    // };
 
-    const handleCreateChat = async (chatID) => {
-        setSelectedChats((prev) => {
-            return prev.filter((chat) => chat !== "new");
-        });
+    // const handleCreateChat = async (chatID) => {
+    //     setSelectedChats((prev) => {
+    //         return prev.filter((chat) => chat !== "new");
+    //     });
 
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/chat/${chatID}`, {
-                withCredentials: true,
-            });
-            setChats((prev) => {
-                const newChats = [response.data, ...prev];
-                return newChats;
-            });
-            selectChat(response.data);
-            socket.emit("join_chats", [chatID]);
-        } catch (error) {
-            console.error("Error occurred:", error);
-        }
-    };
+    //     try {
+    //         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/chat/${chatID}`, {
+    //             withCredentials: true,
+    //         });
+    //         setChats((prev) => {
+    //             const newChats = [response.data, ...prev];
+    //             return newChats;
+    //         });
+    //         selectChat(response.data);
+    //         socket.emit("join_chats", [chatID]);
+    //     } catch (error) {
+    //         console.error("Error occurred:", error);
+    //     }
+    // };
 
     const ChevronSVG = () => (
         <svg className="chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -340,7 +340,7 @@ const Sidebar = () => {
     );
 
     useEffect(() => {
-        fetchChats();
+        // fetchChats();
         loadUser();
     }, []);
 
@@ -371,7 +371,7 @@ const Sidebar = () => {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/logout`, null, {
                 withCredentials: true,
             });
-            if (socket && socket.connected) socket.disconnect();
+            // if (socket && socket.connected) socket.disconnect();
             navigate("/login", { replace: true });
             localStorage.removeItem("user");
             sessionStorage.removeItem("user");
@@ -767,7 +767,7 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <div className="chat-list-container">
+            {/* <div className="chat-list-container">
                 <div className={`chat-list ${chatListOpen ? "open" : ""}`}>
                     <div className="header">
                         <div className="right-side">
@@ -905,7 +905,7 @@ const Sidebar = () => {
                         />
                     );
                 })}
-            </div>
+            </div> */}
         </>
     );
 };

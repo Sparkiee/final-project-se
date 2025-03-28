@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip, Avatar, Badge, Popover, Divider } from "antd";
 import { LogoutOutlined, BellOutlined, CloseOutlined } from "@ant-design/icons";
 import { handleMouseDown } from "../../utils/mouseDown";
-import { useSocket } from "../../utils/SocketContext";
+// import { useSocket } from "../../utils/SocketContext";
 import { NotificationsContext } from "../../utils/NotificationsContext";
 
 const HeaderMenu = () => {
@@ -23,7 +23,7 @@ const HeaderMenu = () => {
     height: window.innerHeight,
   });
 
-  const { socket, isConnected } = useSocket();
+  // const { socket, isConnected } = useSocket();
 
   useEffect(() => {
     const handleResize = () => {
@@ -123,9 +123,9 @@ const HeaderMenu = () => {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/logout`, null, {
         withCredentials: true,
       });
-      if (socket && socket.connected) {
-        socket.disconnect();
-      }
+      // if (socket && socket.connected) {
+      //   socket.disconnect();
+      // }
       navigate("/login", { replace: true });
       localStorage.removeItem("user");
       sessionStorage.removeItem("user");
