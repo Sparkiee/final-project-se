@@ -629,6 +629,95 @@ export const getActiveAdvisors = async (req, res) => {
   }
 };
 
+export const forgotPassword = async (req, res) => {
+  const { email, id } = req.body;
+  try {
+    const user = await User.findOne({ email: email, id: id });
+    if (!user) {
+      return res.status(200).send("User not found");
+    }
+    if (user.resetPasswordRequest) {
+      return res.status(200).send("Password reset request already sent");
+    }
+    user.resetPasswordRequest = true;
+    user.resetPasswordRequestDate = new Date();
+    await user.save();
+
+    // Create notifications for coordinators to know about the request
+    const coordinators = await User.find({ isCoordinator: true });
+    await Promise.all(
+      coordinators.map(async (coordinator) => {
+        const notification = new Notification({
+          user: coordinator._id,
+          message: `התקבלה בקשה לאיפוס סיסמה עבור המשתמש "${user.name}"`,
+          link: "/approve-reset-password",
+        });
+        await notification.save();
+      })
+    );
+
+    res.status(200).send("Password reset request sent successfully");
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const getResetPasswordUsers = async (req, res) => {
+  try {
+    const users = await User.find({
+      $or: [
+        { resetPasswordRequest: true },
+        { resetPasswordRequestApprovedDate: { $exists: true } },
+        { resetPasswordRequestRejectionDate: { $exists: true } },
+      ],
+    });
+
+    const usersWithoutPassword = users.map((user) => {
+      const userObj = user.toObject();
+      delete userObj.password;
+      return userObj;
+    });
+
+    res.status(200).send(usersWithoutPassword);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const approveResetPassword = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    user.resetPasswordRequest = false;
+    user.resetPasswordRequestApprovedDate = new Date();
+    user.password = await bcrypt.hash(user.id, 10);
+    user.firstLogin = true;
+    await user.save();
+    res.status(200).send("Password reset approved successfully");
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const rejectResetPassword = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    user.resetPasswordRequest = false;
+    user.resetPasswordRequestRejectionDate = new Date();
+    await user.save();
+    res.status(200).send("Password reset rejected successfully");
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
 export const sendEmailsToNewUsers = async (users) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",

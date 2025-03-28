@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import collegeLogo from "../../assets/CollegeLogo.png";
 import projectManagementLogo from "../../assets/project-management-logo.png";
-import { Alert, Form, Input, Button, message, Checkbox, Result } from "antd";
+import { Alert, Form, Input, Button, message, Checkbox, Result, InputNumber } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -167,19 +167,34 @@ const Login = () => {
     }
   };
 
+  // const handleForgotPassword = async (values) => {
+  //   setLoading(true);
+  //   try {
+  //     const { email } = values;
+  //     await axios.post(
+  //       `${process.env.REACT_APP_BACKEND_URL}/api/email/forgot-password`,
+  //       { email },
+  //       { withCredentials: true }
+  //     );
+  //     setPasswordEmailSent(true);
+  //     setShowForgotPassword(false);
+  //   } catch (error) {
+  //     message.error("שגיאה בשליחת קישור לאיפוס סיסמה");
+  //     console.error("Forgot password error:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleForgotPassword = async (values) => {
     setLoading(true);
     try {
-      const { email } = values;
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/email/forgot-password`,
-        { email },
-        { withCredentials: true }
-      );
+      const { email, id } = values;
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/forgot-password`, { email, id });
       setPasswordEmailSent(true);
       setShowForgotPassword(false);
     } catch (error) {
-      message.error("שגיאה בשליחת קישור לאיפוס סיסמה");
+      message.error("שגיאה בשליחת בקשה לאיפוס סיסמה");
       console.error("Forgot password error:", error);
     } finally {
       setLoading(false);
@@ -324,9 +339,20 @@ const Login = () => {
               hasFeedback>
               <Input type="email" size="large" placeholder="הכנס אימייל" />
             </Form.Item>
+            <Form.Item
+              name="id"
+              label="תעודת זהות"
+              rules={[
+                { required: true, message: "חובה להזין תעודת זהות" },
+                { min: 9, message: "תעודת זהות חייבת להכיל 9 ספרות" },
+                { max: 9, message: "תעודת זהות חייבת להכיל 9 ספרות" },
+              ]}
+              hasFeedback>
+              <Input type="number" size="large" placeholder="הכנס תעודת זהות" />
+            </Form.Item>
             <Form.Item className="forgot-password-button">
               <Button type="primary" htmlType="submit" loading={loading}>
-                שלח קישור לאיפוס סיסמה
+                שלח בקשה לאיפוס סיסמה
               </Button>
             </Form.Item>
           </Form>
@@ -336,8 +362,8 @@ const Login = () => {
         <Result
           className="password-email-sent"
           status="success"
-          title="מייל לאיפוס סיסמה נשלח!"
-          subTitle="אם כתובת המייל קיימת במערכת, יתקבל מייל עם הוראות לאיפוס סיסמה."
+          title="בקשתך לאיפוס הסיסמה נשלחה!"
+          subTitle="אם כתובת המייל קיימת במערכת, בקשתך התקבלה ותטופל בהקדם."
           extra={[
             <Button
               key="back-to-login"

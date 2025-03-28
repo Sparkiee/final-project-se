@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
   expireDate: { type: Number, default: null },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  resetPasswordRequest: { type: Boolean, default: false },
+  resetPasswordRequestDate: { type: Date },
+  resetPasswordRequestApprovedDate: { type: Date },
+  resetPasswordRequestRejectionDate: { type: Date },
 });
 
 const userModel = mongoose.model("User", userSchema);

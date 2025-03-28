@@ -29,6 +29,10 @@ import {
   sendEmailsToNewUsers,
   checkResetPasswordToken,
   resetPassword,
+  forgotPassword,
+  getResetPasswordUsers,
+  approveResetPassword,
+  rejectResetPassword,
 } from "../controllers/userController.js";
 import {
   getUnreadNotifications,
@@ -80,6 +84,10 @@ router.get("/get-user-project-statistics/:id", ensureAuthenticated, getUserProje
 router.delete("/delete-all", ensureAuthenticated, isCoordinator, deleteAllUsers);
 router.post("/send-emails-to-new-users", ensureAuthenticated, isCoordinator, sendEmailsToNewUsers);
 router.get("/get-active-advisors", ensureAuthenticated, getActiveAdvisors);
+router.post("/forgot-password", forgotPassword);
+router.get("/reset-password-requests", ensureAuthenticated, isCoordinator, getResetPasswordUsers);
+router.post("/approve-reset-password/:id", ensureAuthenticated, isCoordinator, approveResetPassword);
+router.post("/reject-reset-password/:id", ensureAuthenticated, isCoordinator, rejectResetPassword);
 
 // Notifications
 router.get("/notifications", ensureAuthenticated, getUnreadNotifications);

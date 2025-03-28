@@ -38,6 +38,7 @@ import GradeDistribution from "./components/GradeDistribution/GradeDistribution"
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import ForbiddenPage from "./components/ForbiddenPage/ForbiddenPage";
 import CreateUserFile from "./components/CreateUser/CreateUserFile";
+import ApproveResetPassword from "./components/ApproveResetPassword/ApproveResetPassword";
 
 function App() {
   return (
@@ -100,6 +101,7 @@ const MainLayout = () => {
       "/approve-projects": "אישור פרויקטים",
       "/reset-password/:token": "איפוס סיסמה",
       "/403": "אין הרשאה",
+      "/approve-reset-password": "איפוס סיסמה",
     };
 
     const currentPath = Object.keys(routeTitles).find((path) =>
@@ -234,6 +236,14 @@ const MainLayout = () => {
                 element={
                   <ProtectedRoute privileges={["coordinator"]}>
                     <CreateUserFile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/approve-reset-password"
+                element={
+                  <ProtectedRoute privileges={["coordinator"]}>
+                    <ApproveResetPassword />
                   </ProtectedRoute>
                 }
               />
