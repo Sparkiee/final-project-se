@@ -519,7 +519,6 @@ const SystemControl = () => {
 
   return (
     <div className="system">
-      <h1 className="system-title">לוח בקרת מערכת</h1>
       <div className="control-options">
         <div className="box switches">
           <h3 className="box-title">ניהול פרויקטים</h3>

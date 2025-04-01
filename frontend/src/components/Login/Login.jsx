@@ -363,7 +363,7 @@ const Login = () => {
           className="password-email-sent"
           status="success"
           title="בקשתך לאיפוס הסיסמה נשלחה!"
-          subTitle="אם כתובת המייל קיימת במערכת, בקשתך התקבלה ותטופל בהקדם."
+          subTitle="אם כתובת המייל קיימת במערכת, בקשתך התקבלה ותטופל בהקדם. מומלץ בנוסף לשלוח מייל למנהל הפרויקטים לבירור התהליך."
           extra={[
             <Button
               key="back-to-login"

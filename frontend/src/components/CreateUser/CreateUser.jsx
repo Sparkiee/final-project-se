@@ -4,7 +4,7 @@ import { DeleteOutlined, InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { Popconfirm } from "antd";
-import { Button, Form, Input, Select, message, Upload, Table, Checkbox, Tooltip } from "antd";
+import { Button, Form, Input, Select, message, Upload, Table, Checkbox, Tooltip, Divider } from "antd";
 import { NotificationsContext } from "../../utils/NotificationsContext";
 const { Dragger } = Upload;
 
@@ -246,7 +246,7 @@ const CreateUser = () => {
   ];
   return (
     <div className="create-user">
-      <h1>צור משתמש חדש</h1>
+      <h1>יצירת משתמש חדש</h1>
       <Form className="create-user-form" form={form} name="createUser" layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="שם מלא"
@@ -315,6 +315,8 @@ const CreateUser = () => {
         </Form.Item>
       </Form>
       <div className="upload-users-csv">
+        <Divider />
+        <h2 style={{ textAlign: "center" }}>יצירת משתמשים מקובץ</h2>
         <Dragger className="uploader-users-csv" {...props}>
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
