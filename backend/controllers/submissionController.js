@@ -552,7 +552,7 @@ export const assignJudgesAI = async (req, res) => {
         return acc;
     }, {});
 
-    const interestsText = Object.entries(workload).map(([id, advisor]) => advisor.interests);
+    const interestsText = Object.entries(workload).map(([id, advisor]) => advisor.interests.trim() !== "" ? advisor.interests : "None");
     const interestsEmbeddings = await getEmbedding(interestsText);
     const interestsEmbeddingMap = Object.keys(workload).reduce((acc, id, index) => {
         acc[id] = interestsEmbeddings[index];

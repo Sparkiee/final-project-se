@@ -3,6 +3,10 @@ import OpenAI from "openai";
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 export async function getEmbedding(text) {
+    if (!text) {
+        console.error("No text provided for embedding.");
+        return null;
+    }
     try {
         // text can be passed as either array or text
         const response = await openai.embeddings.create({
